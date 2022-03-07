@@ -13,48 +13,41 @@ public class RandomTiles : MonoBehaviour
         public float PosZ;
     }
 
-    private TileInfomations[] _tileInfos = new TileInfomations[48];
-    private int[] _randomTileNum = new int[48];
+    private const int PREPARATION_TILE_NUM = 4;
+    private const int MAX_TILE_NUM = 48;
+
+    private const string PAVEMENT = "Prefabs/Pavement";
+    private const string ROAD = "Prefabs/Road";
+    private const string RAILWAY = "Prefabs/RailWay";
+    private const string RIVER = "Prefabs/River";
+
+    private TileInfomations[] _tileInfos = new TileInfomations[MAX_TILE_NUM];
+
+    private Dictionary<ETileTypes, Object> _tileIndexs = new Dictionary<ETileTypes, Object>();
 
     private float[] _ratios = { 35f, 30f, 20f, 15f, };
 
     private void Start()
     {
-        for (int i = 0; i < 4; ++i)
+        _tileIndexs.Add(ETileTypes.Pavement, Resources.Load(PAVEMENT));
+        _tileIndexs.Add(ETileTypes.Road, Resources.Load(ROAD));
+        _tileIndexs.Add(ETileTypes.RailWay,  Resources.Load(RAILWAY));
+        _tileIndexs.Add(ETileTypes.River, Resources.Load(RIVER));
+
+        for (int i = 0; i < PREPARATION_TILE_NUM; ++i)
         {
-            _randomTileNum[i] = 0;
             _tileInfos[i].PosZ = i * 0.5f;
             _tileInfos[i].Type = ETileTypes.Pavement;
-            _tileInfos[i].Object = (GameObject)Instantiate(Resources.Load("Prefabs/Pavement"), new Vector3(0f, 0f, _tileInfos[i].PosZ), Quaternion.identity);
+            _tileInfos[i].Object = (GameObject)Instantiate(_tileIndexs[ETileTypes.Pavement], new Vector3(0f, 0f, _tileInfos[i].PosZ), Quaternion.identity);
         }
 
-        for (int i = 4; i < 48; ++i)
+        for (int i = PREPARATION_TILE_NUM; i < MAX_TILE_NUM; ++i)
         {
-            _randomTileNum[i] = (int)CreateWeightedRandomNumber(_ratios);
+            ETileTypes _tileType = (ETileTypes)CreateWeightedRandomNumber(_ratios);
 
-            switch (_randomTileNum[i])
-            {
-                case 0:
-                    _tileInfos[i].PosZ = i * 0.5f;
-                    _tileInfos[i].Type = ETileTypes.Pavement;
-                    _tileInfos[i].Object = (GameObject)Instantiate(Resources.Load("Prefabs/Pavement"), new Vector3(0f, 0f, _tileInfos[i].PosZ), Quaternion.identity);
-                    break;
-                case 1:
-                    _tileInfos[i].PosZ = i * 0.5f;
-                    _tileInfos[i].Type = ETileTypes.Road;
-                    _tileInfos[i].Object = (GameObject)Instantiate(Resources.Load("Prefabs/Road"), new Vector3(0f, 0f, _tileInfos[i].PosZ), Quaternion.identity);
-                    break;
-                case 2:
-                    _tileInfos[i].PosZ = i * 0.5f;
-                    _tileInfos[i].Type = ETileTypes.RailWay;
-                    _tileInfos[i].Object = (GameObject)Instantiate(Resources.Load("Prefabs/RailWay"), new Vector3(0f, 0f, _tileInfos[i].PosZ), Quaternion.identity);
-                    break;
-                case 3:
-                    _tileInfos[i].PosZ = i * 0.5f;
-                    _tileInfos[i].Type = ETileTypes.River;
-                    _tileInfos[i].Object = (GameObject)Instantiate(Resources.Load("Prefabs/River"), new Vector3(0f, 0f, _tileInfos[i].PosZ), Quaternion.identity);
-                    break;
-            }
+            _tileInfos[i].PosZ = i * 0.5f;
+            _tileInfos[i].Type = _tileType;
+            _tileInfos[i].Object = (GameObject)Instantiate(_tileIndexs[_tileType], new Vector3(0f, 0f, _tileInfos[i].PosZ), Quaternion.identity);
         }
 
         Debug.Log($"실행 완료\n");
