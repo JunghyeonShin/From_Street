@@ -310,7 +310,7 @@ GameObject:
   - component: {fileID: 1373787526}
   - component: {fileID: 1373787527}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: TileMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -342,3 +342,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16d843fc015d1747b4c345288bd5ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1837023893
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1837023895}
+  - component: {fileID: 1837023894}
+  m_Layer: 0
+  m_Name: TestObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1837023894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837023893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7c2596ed162c64aae01e3cb6629f2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tileInfos:
+  - _type: 0
+    _obj: {fileID: 1490709710613136539, guid: 730b851bb0ab74140b04d2f91cb64797, type: 3}
+    _objSize: 10
+    _weight: 35
+    _minValue: 2
+    _maxValue: 5
+  - _type: 1
+    _obj: {fileID: 0}
+    _objSize: 0
+    _weight: 0
+    _minValue: 0
+    _maxValue: 0
+  - _type: 3
+    _obj: {fileID: 0}
+    _objSize: 0
+    _weight: 0
+    _minValue: 0
+    _maxValue: 0
+  - _type: 4
+    _obj: {fileID: 0}
+    _objSize: 0
+    _weight: 0
+    _minValue: 0
+    _maxValue: 0
+  - _type: 5
+    _obj: {fileID: 0}
+    _objSize: 0
+    _weight: 0
+    _minValue: 0
+    _maxValue: 0
+  - _type: 2
+    _obj: {fileID: 0}
+    _objSize: 0
+    _weight: 0
+    _minValue: 0
+    _maxValue: 0
+--- !u!4 &1837023895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837023893}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
