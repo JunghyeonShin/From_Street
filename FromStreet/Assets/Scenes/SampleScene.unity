@@ -293,7 +293,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.27982908, y: 0, z: 0, w: 0.96004987}
-  m_LocalPosition: {x: 0, y: 9.5, z: -6.5}
+  m_LocalPosition: {x: 0, y: 3.5, z: -1.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -342,6 +342,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16d843fc015d1747b4c345288bd5ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tileInfos:
+  - _obj: {fileID: 8337817071013720897, guid: 53349dbbaec990743bc8a575125db042, type: 3}
+    _type: 0
+    _weight: 40
+    _minValue: 2
+    _maxValue: 5
+    _objSize: 20
+  - _obj: {fileID: 847087955599386942, guid: eb8e0d57bc6a1214587ddb7c0ea5580d, type: 3}
+    _type: 1
+    _weight: 35
+    _minValue: 2
+    _maxValue: 5
+    _objSize: 20
+  - _obj: {fileID: 1490709710613136539, guid: 730b851bb0ab74140b04d2f91cb64797, type: 3}
+    _type: 2
+    _weight: 15
+    _minValue: 1
+    _maxValue: 3
+    _objSize: 20
+  - _obj: {fileID: 1605174173175976365, guid: 99a1828c15341324d97494567666add0, type: 3}
+    _type: 3
+    _weight: 10
+    _minValue: 1
+    _maxValue: 3
+    _objSize: 20
 --- !u!1 &1837023893
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,6 +433,7 @@ MonoBehaviour:
     _weight: 0
     _minValue: 0
     _maxValue: 0
+  _curPos: {x: 0, y: 0, z: 0}
 --- !u!4 &1837023895
 Transform:
   m_ObjectHideFlags: 0
