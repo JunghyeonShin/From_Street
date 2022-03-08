@@ -1,6 +1,6 @@
 ﻿//define TileTypes
 
-enum ETileTypes
+public enum ETileTypes
 { 
     Pavement,
     Road,
