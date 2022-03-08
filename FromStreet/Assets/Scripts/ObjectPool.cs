@@ -44,7 +44,6 @@ class ObjectPool
     public void ReturnObject(GameObject obj)
     {
         obj.SetActive(false);
-        _pooledObjects.Enqueue(CreateNewObject());
     }
 
     private GameObject CreateNewObject()
