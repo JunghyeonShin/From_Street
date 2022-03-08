@@ -1,13 +1,7 @@
-﻿// define Const Value
+// define Constant Value
 
-class ConstantValue
+public class ConstantValue
 {
-    public const int CREATE_TILE_NUM = 20;
-    public const int PREPARATION_TILE_NUM = 4;
-    public const int MAX_TILE_NUM = 48;
-
-    public const string PAVEMENT = "Prefabs/Pavement";
-    public const string ROAD = "Prefabs/Road";
-    public const string RAILWAY = "Prefabs/RailWay";
-    public const string RIVER = "Prefabs/River";
+    public const int READY_TILE_NUMBER = 5;
+    public const int MAX_TILE_NUMBER = 50;
 }
