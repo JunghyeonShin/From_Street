@@ -6,13 +6,13 @@ using UnityEngine;
 
 class ObjectPool
 {
-    private Object _objectPrefab = null;
+    private GameObject _objectPrefab = null;
 
     private int _totalCount = 0;
 
     private Queue<GameObject> _pooledObjects = new Queue<GameObject>();
 
-    public void Initialize(int cnt, Object obj)
+    public void Initialize(int cnt, GameObject obj)
     {
         _totalCount = cnt;
         _objectPrefab = obj;
@@ -49,7 +49,7 @@ class ObjectPool
 
     private GameObject CreateNewObject()
     {
-        GameObject _newObject = GameObject.Instantiate((GameObject)_objectPrefab);
+        GameObject _newObject = GameObject.Instantiate(_objectPrefab);
         _newObject.SetActive(false);
 
         return _newObject;
