@@ -34,14 +34,18 @@ public class RandomTiles : MonoBehaviour
 
     private Dictionary<ETileTypes, ObjectPool> _tileDictionaries = new Dictionary<ETileTypes, ObjectPool>();
 
-    private Vector3 _currPos = Vector3.zero;
-
     private Queue<GameObject> _createdTiles = new Queue<GameObject>();
 
-    private const float TILE_SIZE = 1f;
+    private Queue<ETileTypes> _listTileType = new Queue<ETileTypes>();
+
+    private Vector3 _currPos = Vector3.zero;
+
+    private ETileTypes _lastTileType = ETileTypes.Pavement;
+
+    private const float TILE_SIZE = 2f;
 
     private const int READY_TILE_NUMBER = 5;
-    private const int MAX_TILE_NUMBER = 50;
+    private const int MAX_TILE_NUMBER = 20;
 
     private void Start()
     {
@@ -51,45 +55,67 @@ public class RandomTiles : MonoBehaviour
 
             _tileDictionaries[_tileInfos[i].TileType] = _tempPool;
 
-            _tempPool.Initialize(_tileInfos[i].ObjectSize, _tileInfos[i].Prefab);
+            _tempPool.InitializeObjectPool(_tileInfos[i].ObjectSize, _tileInfos[i].Prefab);
         }
 
-        CreateRandomTile();
+        CreateInitTiles();
     }
 
-    private void Update()
+    public void ReturnTile(ETileTypes type, GameObject obj)
     {
-        // 타일이 삭제되는지 Space바 클릭으로 확인 (삭제 꼐정)
-        if (Input.GetKeyDown(KeyCode.Space))
+        _createdTiles.Dequeue();
+
+        _tileDictionaries[type].ReturnObject(obj);
+
+        if (_listTileType.Count == 0)
         {
-            ReturnTile();
+            ListUpTileType();
         }
+
+        PushTile(_listTileType.Dequeue());
     }
 
-    private void CreateRandomTile()
+    private void CreateInitTiles()
     {
         for (int i = 0; i < READY_TILE_NUMBER; ++i)
         {
-            RenderTile(ETileTypes.Pavement);
+            PushTile(ETileTypes.Pavement);
         }
 
-        do
+        while (_createdTiles.Count <= MAX_TILE_NUMBER)
         {
-            ETileTypes _type = SelectTile();
+            ListUpTileType();
 
-            int _randomTileNumber = UnityEngine.Random.Range(_tileInfos[(int)_type].MinValue, _tileInfos[(int)_type].MaxValue);
-
-            for (int i = 0; i < _randomTileNumber; ++i)
+            for (int i = 0; i < _listTileType.Count;)
             {
-                RenderTile(_type);
+                PushTile(_listTileType.Dequeue());
             }
         }
-        while (_createdTiles.Count <= MAX_TILE_NUMBER);
     }
 
-    private void RenderTile(ETileTypes type)
+    private void ListUpTileType()
+    {
+        ETileTypes _type = SelectTileType();
+
+        while (_lastTileType == _type)
+        {
+            _type = SelectTileType();
+        }
+
+        _lastTileType = _type;
+
+        int _randomTileNumber = UnityEngine.Random.Range(_tileInfos[(int)_type].MinValue, _tileInfos[(int)_type].MaxValue);
+
+        for (int i = 0; i < _randomTileNumber; ++i)
+        {
+            _listTileType.Enqueue(_type);
+        }
+    }
+
+    private void PushTile(ETileTypes type)
     {
         GameObject _obj = _tileDictionaries[type].GiveObject();
+
         _obj.transform.position = _currPos;
 
         _createdTiles.Enqueue(_obj);
@@ -97,34 +123,7 @@ public class RandomTiles : MonoBehaviour
         _currPos += Vector3.forward * TILE_SIZE;
     }
 
-    private void ReturnTile()
-    {
-        ETileTypes _type = ETileTypes.Pavement;
-
-        GameObject _obj = _createdTiles.Dequeue();
-
-        switch(_obj.name)
-        {
-            case ConstantValue.PAVEMENT:
-                _type = ETileTypes.Pavement;
-                break;
-            case ConstantValue.ROAD:
-                _type = ETileTypes.Road;
-                break;
-            case ConstantValue.RAILWAY:
-                _type = ETileTypes.RailWay;
-                break;
-            case ConstantValue.RIVER:
-                _type = ETileTypes.River;
-                break;
-            default:
-                break;
-        }
-
-        _tileDictionaries[_type].ReturnObject(_obj);
-    }
-
-    private ETileTypes SelectTile()
+    private ETileTypes SelectTileType()
     {
         float _total = 0f;
 
