@@ -38,6 +38,11 @@ public class RandomTiles : MonoBehaviour
 
     private Queue<GameObject> _createdTiles = new Queue<GameObject>();
 
+    private const float TILE_SIZE = 1f;
+
+    private const int READY_TILE_NUMBER = 5;
+    private const int MAX_TILE_NUMBER = 50;
+
     private void Start()
     {
         for (int i = 0; i < _tileInfos.Count; ++i)
@@ -55,17 +60,15 @@ public class RandomTiles : MonoBehaviour
     private void Update()
     {
         // 타일이 삭제되는지 Space바 클릭으로 확인 (삭제 꼐정)
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             ReturnTile();
         }
-
-        Debug.Log($"_currPos : {_currPos}");
     }
 
     private void CreateRandomTile()
     {
-        for (int i = 0; i < ConstantValue.READY_TILE_NUMBER; ++i)
+        for (int i = 0; i < READY_TILE_NUMBER; ++i)
         {
             RenderTile(ETileTypes.Pavement);
         }
@@ -81,9 +84,7 @@ public class RandomTiles : MonoBehaviour
                 RenderTile(_type);
             }
         }
-        while (_createdTiles.Count <= ConstantValue.MAX_TILE_NUMBER);
-
-        Debug.Log($"실행 완료\n");
+        while (_createdTiles.Count <= MAX_TILE_NUMBER);
     }
 
     private void RenderTile(ETileTypes type)
@@ -93,7 +94,7 @@ public class RandomTiles : MonoBehaviour
 
         _createdTiles.Enqueue(_obj);
 
-        _currPos += Vector3.forward * ConstantValue.TILE_SIZE;
+        _currPos += Vector3.forward * TILE_SIZE;
     }
 
     private void ReturnTile()
