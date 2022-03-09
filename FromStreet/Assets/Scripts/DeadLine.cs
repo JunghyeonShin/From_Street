@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DeadLine : MonoBehaviour
 {
+    [SerializeField] private RandomTiles _randomTiles = null;
     [SerializeField] private Camera _camera = null;
     [SerializeField] private float _moveSpeed = 0f;
 
@@ -11,6 +12,8 @@ public class DeadLine : MonoBehaviour
     private Transform _transform;
 
     private Vector3 _distance = Vector3.zero;
+
+    private const int LAYER_TILE = 3;
 
     private void Awake()
     {
@@ -52,8 +55,10 @@ public class DeadLine : MonoBehaviour
                 break;
         }
 
-        // 타입과 오브젝트를 전달하여 ReturnObject
-        Debug.Log($"타일 타입 : {_type}");
+        if (other.gameObject.layer == LAYER_TILE)
+        {
+            _randomTiles.ReturnTile(_type, other.gameObject);
+        }
     }
 
     private void Move()
