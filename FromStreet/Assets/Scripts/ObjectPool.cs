@@ -6,15 +6,12 @@ using UnityEngine;
 
 class ObjectPool
 {
-    private GameObject _objectPrefab = null;
-
-    private int _totalCount = 0;
-
     private Queue<GameObject> _pooledObjects = new Queue<GameObject>();
 
-    public void Initialize(int cnt, GameObject obj)
+    private GameObject _objectPrefab = null;
+
+    public void InitializeObjectPool(int cnt, GameObject obj)
     {
-        _totalCount = cnt;
         _objectPrefab = obj;
 
         for (int i = 0; i < cnt; ++i)
@@ -44,6 +41,8 @@ class ObjectPool
     public void ReturnObject(GameObject obj)
     {
         obj.SetActive(false);
+
+        _pooledObjects.Enqueue(obj);
     }
 
     private GameObject CreateNewObject()
