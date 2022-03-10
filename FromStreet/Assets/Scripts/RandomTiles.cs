@@ -32,6 +32,8 @@ public class RandomTiles : MonoBehaviour
 {
     [SerializeField] private List<TileInfomations> _tileInfos = null;
 
+    [SerializeField] private FixedObstacleSpawn _fixedObstacleSpawn = null;
+
     private Dictionary<ETileTypes, ObjectPool> _tileDictionaries = new Dictionary<ETileTypes, ObjectPool>();
 
     private Queue<GameObject> _createdTiles = new Queue<GameObject>();
@@ -114,11 +116,13 @@ public class RandomTiles : MonoBehaviour
 
     private void PushTile(ETileTypes type)
     {
-        _fixedObstaclePositioningMap.GetTileType(type);
-
         GameObject obj = _tileDictionaries[type].GiveObject();
 
+        _fixedObstaclePositioningMap.GetTileType(type);
+
         obj.transform.position = _currPos;
+
+        _fixedObstacleSpawn.SetFixedObstacle(_fixedObstaclePositioningMap.CreatablePosition);
 
         _createdTiles.Enqueue(obj);
 
