@@ -116,11 +116,11 @@ public class RandomTiles : MonoBehaviour
     {
         _fixedObstaclePositioningMap.GetTileType(type);
 
-        GameObject _obj = _tileDictionaries[type].GiveObject();
+        GameObject obj = _tileDictionaries[type].GiveObject();
 
-        _obj.transform.position = _currPos;
+        obj.transform.position = _currPos;
 
-        _createdTiles.Enqueue(_obj);
+        _createdTiles.Enqueue(obj);
 
         _currPos += Vector3.forward * ConstantValue.TILE_SIZE;
     }
