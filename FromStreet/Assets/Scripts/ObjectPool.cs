@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-class ObjectPool
+public class ObjectPool
 {
     private Queue<GameObject> _pooledObjects = new Queue<GameObject>();
 
@@ -22,19 +22,19 @@ class ObjectPool
 
     public GameObject GiveObject()
     {
-        if (_pooledObjects.Count > 0)
+        if (_pooledObjects.Count > ConstantValue.EMPTY)
         {
-            GameObject _object = _pooledObjects.Dequeue();
-            _object.SetActive(true);
+            GameObject pooledObject = _pooledObjects.Dequeue();
+            pooledObject.SetActive(true);
 
-            return _object;
+            return pooledObject;
         }
         else
         {
-            GameObject _newObject = CreateNewObject();
-            _newObject.SetActive(true);
+            GameObject newObject = CreateNewObject();
+            newObject.SetActive(true);
 
-            return _newObject;
+            return newObject;
         }
     }
 
@@ -47,9 +47,9 @@ class ObjectPool
 
     private GameObject CreateNewObject()
     {
-        GameObject _newObject = GameObject.Instantiate(_objectPrefab);
-        _newObject.SetActive(false);
+        GameObject newObject = GameObject.Instantiate(_objectPrefab);
+        newObject.SetActive(false);
 
-        return _newObject;
+        return newObject;
     }
 }

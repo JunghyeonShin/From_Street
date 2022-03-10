@@ -25,7 +25,7 @@ public class TileInfomations
 
     public int MaxValue { get { return _maxValue; } }
 
-    public int ObjectSize { get { return _objSize; } }
+    public int PoolingObjectSize { get { return _objSize; } }
 }
 
 public class RandomTiles : MonoBehaviour
@@ -38,24 +38,24 @@ public class RandomTiles : MonoBehaviour
 
     private Queue<ETileTypes> _listTileType = new Queue<ETileTypes>();
 
-    private Vector3 _currPos = Vector3.zero;
+    private FixedObstaclePositioningMap _fixedObstaclePositioningMap = new FixedObstaclePositioningMap();
+
+    private Vector3 _currPos = new Vector3(0f, 0f, 6f);
 
     private ETileTypes _lastTileType = ETileTypes.Pavement;
 
-    private const float TILE_SIZE = 2f;
-
-    private const int READY_TILE_NUMBER = 5;
+    private const int READY_TILE_NUMBER = 2;
     private const int MAX_TILE_NUMBER = 20;
 
     private void Start()
     {
         for (int i = 0; i < _tileInfos.Count; ++i)
         {
-            ObjectPool _tempPool = new ObjectPool();
+            ObjectPool tempPool = new ObjectPool();
 
-            _tileDictionaries[_tileInfos[i].TileType] = _tempPool;
+            _tileDictionaries[_tileInfos[i].TileType] = tempPool;
 
-            _tempPool.InitializeObjectPool(_tileInfos[i].ObjectSize, _tileInfos[i].Prefab);
+            tempPool.InitializeObjectPool(_tileInfos[i].PoolingObjectSize, _tileInfos[i].Prefab);
         }
 
         CreateInitTiles();
@@ -67,7 +67,7 @@ public class RandomTiles : MonoBehaviour
 
         _tileDictionaries[type].ReturnObject(obj);
 
-        if (_listTileType.Count == 0)
+        if (ConstantValue.EMPTY == _listTileType.Count)
         {
             ListUpTileType();
         }
@@ -95,44 +95,46 @@ public class RandomTiles : MonoBehaviour
 
     private void ListUpTileType()
     {
-        ETileTypes _type = SelectTileType();
+        ETileTypes type = SelectTileType();
 
-        while (_lastTileType == _type)
+        while (type == _lastTileType)
         {
-            _type = SelectTileType();
+            type = SelectTileType();
         }
 
-        _lastTileType = _type;
+        _lastTileType = type;
 
-        int _randomTileNumber = UnityEngine.Random.Range(_tileInfos[(int)_type].MinValue, _tileInfos[(int)_type].MaxValue);
+        int _randomTileNumber = UnityEngine.Random.Range(_tileInfos[(int)type].MinValue, _tileInfos[(int)type].MaxValue);
 
         for (int i = 0; i < _randomTileNumber; ++i)
         {
-            _listTileType.Enqueue(_type);
+            _listTileType.Enqueue(type);
         }
     }
 
     private void PushTile(ETileTypes type)
     {
+        _fixedObstaclePositioningMap.GetTileType(type);
+
         GameObject _obj = _tileDictionaries[type].GiveObject();
 
         _obj.transform.position = _currPos;
 
         _createdTiles.Enqueue(_obj);
 
-        _currPos += Vector3.forward * TILE_SIZE;
+        _currPos += Vector3.forward * ConstantValue.TILE_SIZE;
     }
 
     private ETileTypes SelectTileType()
     {
-        float _total = 0f;
+        float total = 0f;
 
         for (int i = 0; i < _tileInfos.Count; ++i)
         {
-            _total += _tileInfos[i].Weight;
+            total += _tileInfos[i].Weight;
         }
 
-        float randomValue = UnityEngine.Random.value * _total;
+        float randomValue = UnityEngine.Random.value * total;
 
         for (int i = 0; i < _tileInfos.Count; ++i)
         {
