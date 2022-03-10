@@ -55,7 +55,7 @@ public class DeadLine : MonoBehaviour
                 break;
         }
 
-        if (other.gameObject.layer == LAYER_TILE)
+        if (LAYER_TILE == other.gameObject.layer)
         {
             _randomTiles.ReturnTile(type, other.gameObject);
         }
