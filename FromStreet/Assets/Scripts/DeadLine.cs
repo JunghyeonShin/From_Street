@@ -35,21 +35,21 @@ public class DeadLine : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        ETileTypes _type = ETileTypes.Pavement;
+        ETileTypes type = ETileTypes.Pavement;
 
         switch (other.name)
         {
             case ConstantValue.PAVEMENT:
-                _type = ETileTypes.Pavement;
+                type = ETileTypes.Pavement;
                 break;
             case ConstantValue.ROAD:
-                _type = ETileTypes.Road;
+                type = ETileTypes.Road;
                 break;
             case ConstantValue.RAILWAY:
-                _type = ETileTypes.RailWay;
+                type = ETileTypes.RailWay;
                 break;
             case ConstantValue.RIVER:
-                _type = ETileTypes.River;
+                type = ETileTypes.River;
                 break;
             default:
                 break;
@@ -57,14 +57,14 @@ public class DeadLine : MonoBehaviour
 
         if (other.gameObject.layer == LAYER_TILE)
         {
-            _randomTiles.ReturnTile(_type, other.gameObject);
+            _randomTiles.ReturnTile(type, other.gameObject);
         }
     }
 
     private void Move()
     {
-        Vector3 _moveVec = _moveSpeed * Time.deltaTime * transform.forward;
+        Vector3 moveVec = _moveSpeed * Time.deltaTime * transform.forward;
 
-        _rigidBody.position += _moveVec;
+        _rigidBody.position += moveVec;
     }
 }
