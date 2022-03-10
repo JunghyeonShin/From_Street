@@ -22,25 +22,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        Vector3 _moveVec = Vector3.zero;
+        Vector3 moveVec = Vector3.zero;
 
         if (_playerInput.MoveForward)
         {
-            _moveVec = new Vector3(0f, 0f, MOVE_SPEED);
+            moveVec = new Vector3(0f, 0f, MOVE_SPEED);
         }
         else if (_playerInput.MoveBack)
         {
-            _moveVec = new Vector3(0f, 0f, -MOVE_SPEED);
+            moveVec = new Vector3(0f, 0f, -MOVE_SPEED);
         }
         else if (_playerInput.MoveLeft)
         {
-            _moveVec = new Vector3(-MOVE_SPEED, 0f, 0f);
+            moveVec = new Vector3(-MOVE_SPEED, 0f, 0f);
         }
         else if (_playerInput.MoveRight)
         {
-            _moveVec = new Vector3(MOVE_SPEED, 0f, 0f);
+            moveVec = new Vector3(MOVE_SPEED, 0f, 0f);
         }
 
-        _playerRigidBody.position += _moveVec;
+        _playerRigidBody.position += moveVec;
     }
 }
