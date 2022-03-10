@@ -8,13 +8,14 @@ using UnityEngine;
 public class FixedObstaclePositioningMap
 {
     private Queue<ETileTypes> _listTiles = new Queue<ETileTypes>();
-    private Queue<int> _listCreatablePositions = new Queue<int>();
 
     private int _lastPositioningIndex = 0;
+    private int _listCreatablePositions = 0;
     private int _randomNumber = 0;
 
-    private const int MAX_POSITION_INDEX = 7;
     private const int TOTAL_CREATABLE_POSITION_INDEX = 4;
+
+    public int CreatablePosition { get { return _listCreatablePositions; } }
 
     public void GetTileType(ETileTypes type)
     {
@@ -33,7 +34,7 @@ public class FixedObstaclePositioningMap
         {
             _lastPositioningIndex = 0;
 
-            _listCreatablePositions.Enqueue(0);
+            _listCreatablePositions = 0;
         }
     }
 
@@ -51,7 +52,7 @@ public class FixedObstaclePositioningMap
         int count = 0;
         int temp = 1;
 
-        for(int i = 0; i < MAX_POSITION_INDEX; ++i)
+        for(int i = 0; i < ConstantValue.MAX_POSITION_INDEX; ++i)
         {
             if (0 != (num & temp))
             {
@@ -74,13 +75,13 @@ public class FixedObstaclePositioningMap
     {
         int temp = 1;
 
-        for (int i = 0; i < MAX_POSITION_INDEX; ++i)
+        for (int i = 0; i < ConstantValue.MAX_POSITION_INDEX; ++i)
         {
             if (0 == ((lhs & temp) | (rhs & temp)))
             {
                 _lastPositioningIndex = lhs | rhs;
 
-                _listCreatablePositions.Enqueue(lhs);
+                _listCreatablePositions = lhs;
 
                 return;
             }
