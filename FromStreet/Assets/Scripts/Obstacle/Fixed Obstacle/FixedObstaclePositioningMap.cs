@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class FixedObjectPositioningMap
+public class FixedObstaclePositioningMap
 {
     private Queue<ETileTypes> _listTiles = new Queue<ETileTypes>();
 
@@ -38,7 +38,7 @@ public class FixedObjectPositioningMap
         }
     }
 
-    public void CreateFixedObstaclePosition()
+    private void CreateFixedObstaclePosition()
     {
         _randomNumber = UnityEngine.Random.Range(0, 128);
 
