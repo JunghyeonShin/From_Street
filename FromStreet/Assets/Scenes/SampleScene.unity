@@ -604,8 +604,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _randomTiles: {fileID: 1373787527}
+  _fixedObstacleSpawn: {fileID: 650051063}
   _camera: {fileID: 963194227}
-  _moveSpeed: 1
+  _moveSpeed: 5
 --- !u!54 &827315852
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -827,8 +828,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.25785333, y: -0.036147285, z: 0.032753415, w: 0.96495193}
-  m_LocalPosition: {x: 0.25, y: 4.5, z: 1.85}
+  m_LocalRotation: {x: -0.19645908, y: 0.07238918, z: -0.014823106, w: -0.9777239}
+  m_LocalPosition: {x: 1.2564853, y: 4.4, z: 0.8820038}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

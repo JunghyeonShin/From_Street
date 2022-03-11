@@ -10,12 +10,12 @@ public class FixedObstaclePositioningMap
     private Queue<ETileTypes> _listTiles = new Queue<ETileTypes>();
 
     private int _lastPositioningIndex = 0;
-    private int _listCreatablePositions = 0;
+    private int _listCreatablePosition = 0;
     private int _randomNumber = 0;
 
     private const int TOTAL_CREATABLE_POSITION_INDEX = 4;
 
-    public int CreatablePosition { get { return _listCreatablePositions; } }
+    public int CreatablePosition { get { return _listCreatablePosition; } }
 
     public void GetTileType(ETileTypes type)
     {
@@ -34,7 +34,7 @@ public class FixedObstaclePositioningMap
         {
             _lastPositioningIndex = 0;
 
-            _listCreatablePositions = 0;
+            _listCreatablePosition = 0;
         }
     }
 
@@ -81,7 +81,7 @@ public class FixedObstaclePositioningMap
             {
                 _lastPositioningIndex = lhs | rhs;
 
-                _listCreatablePositions = lhs;
+                _listCreatablePosition = lhs;
 
                 return;
             }

@@ -30,9 +30,9 @@ public class FixedObstacleSpawn : MonoBehaviour
 
                     float posX = 6f - (i * 2f);
 
-                    Vector3 positionVec = new Vector3(posX, 0f, _posZ);
+                    Vector3 currPos = new Vector3(posX, 0f, _posZ);
 
-                    obj.transform.position += positionVec;
+                    obj.transform.position = currPos;
                 }
 
                 temp <<= 1;
@@ -40,5 +40,10 @@ public class FixedObstacleSpawn : MonoBehaviour
         }
 
         _posZ += ConstantValue.TILE_SIZE;
+    }
+
+    public void ReturnFixedObstacle(GameObject obj)
+    {
+        _fixedObstaclePool.ReturnObject(obj);
     }
 }
