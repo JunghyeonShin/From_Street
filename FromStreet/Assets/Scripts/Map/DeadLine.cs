@@ -5,24 +5,17 @@ using UnityEngine;
 public class DeadLine : MonoBehaviour
 {
     [SerializeField] private RandomTiles _randomTiles = null;
-    [SerializeField] private FixedObstacleSpawn _fixedObstacleSpawn = null;
-    [SerializeField] private Camera _camera = null;
     [SerializeField] private float _moveSpeed = 0f;
 
     private Rigidbody _rigidBody;
-    private Transform _transform;
 
     private Vector3 _distance = Vector3.zero;
 
     private const int LAYER_TILE = 3;
-    private const int LAYER_FIXED_OBSTACLE = 6;
 
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();
-        _transform = GetComponent<Transform>();
-
-        _distance = -_camera.transform.position;
     }
 
     private void Update()
@@ -32,7 +25,6 @@ public class DeadLine : MonoBehaviour
 
     private void LateUpdate()
     {
-        _camera.transform.position = _transform.position - _distance;
     }
 
     private void OnTriggerExit(Collider other)
@@ -60,10 +52,6 @@ public class DeadLine : MonoBehaviour
             }
 
             _randomTiles.ReturnTile(type, other.gameObject);
-        }
-        else if (LAYER_FIXED_OBSTACLE == other.gameObject.layer)
-        {
-            _fixedObstacleSpawn.ReturnFixedObstacle(other.gameObject);
         }
     }
 
