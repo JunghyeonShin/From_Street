@@ -7,6 +7,7 @@ using UnityEngine;
 public class TileInfomations
 {
     [SerializeField] private GameObject _obj = null;
+
     [SerializeField] private ETileTypes _type = ETileTypes.Pavement;
 
     [SerializeField] private float _weight = 0f;
@@ -32,22 +33,22 @@ public class RandomTiles : MonoBehaviour
 {
     [SerializeField] private List<TileInfomations> _tileInfos = null;
 
-    [SerializeField] private FixedObstacleSpawn _fixedObstacleSpawn = null;
-
     private Dictionary<ETileTypes, ObjectPool> _tileDictionaries = new Dictionary<ETileTypes, ObjectPool>();
 
     private Queue<GameObject> _createdTiles = new Queue<GameObject>();
 
     private Queue<ETileTypes> _listTileType = new Queue<ETileTypes>();
 
-    private FixedObstaclePositioningMap _fixedObstaclePositioningMap = new FixedObstaclePositioningMap();
-
-    private Vector3 _currPos = new Vector3(0f, 0f, 6f);
-
+    private ETileTypes _createNextTileType = ETileTypes.Pavement;
     private ETileTypes _lastTileType = ETileTypes.Pavement;
+
+    private float _currPosZ = 6f;
 
     private const int READY_TILE_NUMBER = 2;
     private const int MAX_TILE_NUMBER = 20;
+
+
+    public ETileTypes CreateNextTileType { get { return _createNextTileType; } }
 
     private void Start()
     {
@@ -74,7 +75,9 @@ public class RandomTiles : MonoBehaviour
             ListUpTileType();
         }
 
-        PushTile(_listTileType.Dequeue());
+        _createNextTileType = _listTileType.Dequeue();
+
+        PushTile(_createNextTileType);
     }
 
     private void CreateInitTiles()
@@ -90,7 +93,9 @@ public class RandomTiles : MonoBehaviour
 
             for (int i = 0; i < _listTileType.Count;)
             {
-                PushTile(_listTileType.Dequeue());
+                _createNextTileType = _listTileType.Dequeue();
+
+                PushTile(_createNextTileType);
             }
         }
     }
@@ -116,17 +121,15 @@ public class RandomTiles : MonoBehaviour
 
     private void PushTile(ETileTypes type)
     {
-        GameObject obj = _tileDictionaries[type].GiveObject();
+        GameObject obj = _tileDictionaries[type].GiveObject(_currPosZ);
 
-        _fixedObstaclePositioningMap.GetTileType(type);
+        Vector3 currPos = new Vector3(0f, 0f, _currPosZ);
 
-        obj.transform.position = _currPos;
-
-        _fixedObstacleSpawn.SetFixedObstacle(_fixedObstaclePositioningMap.CreatablePosition);
+        obj.transform.position = currPos;
 
         _createdTiles.Enqueue(obj);
 
-        _currPos += Vector3.forward * ConstantValue.TILE_SIZE;
+        _currPosZ += ConstantValue.TILE_SIZE;
     }
 
     private ETileTypes SelectTileType()

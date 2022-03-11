@@ -3,23 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EObstacleTypes { Tree, Car, Boat, Train }
-
-public interface IObjectPoolMessage
-{
-    public void OnPulled();
-
-    public void OnPushed();
-}
 
 [Serializable]
 public class ObstacleInfomations
 {
-    [SerializeField] private GameObject _obj;
+    [SerializeField] private GameObject _obj = null;
 
-    [SerializeField] private EObstacleTypes _type;
+    [SerializeField] private EObstacleTypes _type = EObstacleTypes.Tree;
 
-    [SerializeField] private int _objSize;
+    [SerializeField] private int _objSize = 0;
 
     public GameObject Prefab { get { return _obj; } }
     public EObstacleTypes ObstacleType { get { return _type; } }
@@ -28,13 +20,13 @@ public class ObstacleInfomations
 
 public class ObstacleSpawn : MonoBehaviour
 {
-    [SerializeField] private List<ObstacleInfomations> _obstacleInfos;
+    [SerializeField] private List<ObstacleInfomations> _obstacleInfos = null;
 
     private Dictionary<EObstacleTypes, ObjectPool> _obstacleDitionaries = new Dictionary<EObstacleTypes, ObjectPool>();
 
     private void Awake()
     {
-        for (int i=0;i<_obstacleInfos.Count; ++i)
+        for (int i = 0; i < _obstacleInfos.Count; ++i)
         {
             ObjectPool tempPool = new ObjectPool();
 
@@ -42,5 +34,15 @@ public class ObstacleSpawn : MonoBehaviour
 
             tempPool.InitializeObjectPool(_obstacleInfos[i].PoolingObjectSize, _obstacleInfos[i].Prefab);
         }
+    }
+
+    public GameObject GiveObstacle(EObstacleTypes type)
+    {
+        return _obstacleDitionaries[type].GiveObject(0);
+    }
+
+    public void ReturnObstacle(EObstacleTypes type, GameObject obj)
+    {
+        _obstacleDitionaries[type].ReturnObject(obj);
     }
 }

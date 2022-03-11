@@ -20,27 +20,31 @@ public class ObjectPool
         }
     }
 
-    public GameObject GiveObject()
+    public GameObject GiveObject(float currPosZ)
     {
+        GameObject pulledObject;
+
         if (_pooledObjects.Count > ConstantValue.EMPTY)
         {
-            GameObject pooledObject = _pooledObjects.Dequeue();
-            pooledObject.SetActive(true);
-
-            return pooledObject;
+            pulledObject = _pooledObjects.Dequeue();
         }
         else
         {
-            GameObject newObject = CreateNewObject();
-            newObject.SetActive(true);
-
-            return newObject;
+            pulledObject = CreateNewObject();
         }
+
+        pulledObject.SetActive(true);
+
+        pulledObject.GetComponent<IObjectPoolMessage>()?.OnPulled(currPosZ);
+
+        return pulledObject;
     }
 
     public void ReturnObject(GameObject obj)
     {
         obj.SetActive(false);
+
+        obj.GetComponent<IObjectPoolMessage>()?.OnPushed();
 
         _pooledObjects.Enqueue(obj);
     }

@@ -10,33 +10,12 @@ public class FixedObjectPositioningMap
     private Queue<ETileTypes> _listTiles = new Queue<ETileTypes>();
 
     private int _lastPositioningIndex = 0;
-    private int _listCreatablePosition = 0;
+    private int _creatablePosition = 0;
     private int _randomNumber = 0;
 
     private const int TOTAL_CREATABLE_POSITION_INDEX = 4;
 
-    public int CreatablePosition { get { return _listCreatablePosition; } }
-
-    public void GetTileType(ETileTypes type)
-    {
-        _listTiles.Enqueue(type);
-
-        SetFixedObstaclePosition();
-    }
-
-    private void SetFixedObstaclePosition()
-    {
-        if (ETileTypes.Pavement == _listTiles.Dequeue())
-        {
-            CreateFixedObstaclePosition();
-        }
-        else
-        {
-            _lastPositioningIndex = 0;
-
-            _listCreatablePosition = 0;
-        }
-    }
+    public int CreatablePosition { get { return _creatablePosition; } }
 
     public void CreateFixedObstaclePosition()
     {
@@ -81,7 +60,7 @@ public class FixedObjectPositioningMap
             {
                 _lastPositioningIndex = lhs | rhs;
 
-                _listCreatablePosition = lhs;
+                _creatablePosition = lhs;
 
                 return;
             }
