@@ -5,40 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class FixedObstaclePositioningMap
+public class FixedObjectPositioningMap
 {
     private Queue<ETileTypes> _listTiles = new Queue<ETileTypes>();
 
     private int _lastPositioningIndex = 0;
-    private int _listCreatablePositions = 0;
+    private int _creatablePosition = 0;
     private int _randomNumber = 0;
 
     private const int TOTAL_CREATABLE_POSITION_INDEX = 4;
 
-    public int CreatablePosition { get { return _listCreatablePositions; } }
+    public int CreatablePosition { get { return _creatablePosition; } }
 
-    public void GetTileType(ETileTypes type)
-    {
-        _listTiles.Enqueue(type);
-
-        SetFixedObstaclePosition();
-    }
-
-    private void SetFixedObstaclePosition()
-    {
-        if (ETileTypes.Pavement == _listTiles.Dequeue())
-        {
-            CreateFixedObstaclePosition();
-        }
-        else
-        {
-            _lastPositioningIndex = 0;
-
-            _listCreatablePositions = 0;
-        }
-    }
-
-    private void CreateFixedObstaclePosition()
+    public void CreateFixedObstaclePosition()
     {
         _randomNumber = UnityEngine.Random.Range(0, 128);
 
@@ -52,7 +31,7 @@ public class FixedObstaclePositioningMap
         int count = 0;
         int temp = 1;
 
-        for(int i = 0; i < ConstantValue.MAX_POSITION_INDEX; ++i)
+        for(int i = 0; i < ConstantValue.MAX_FIXED_OBSTACLE_POSITION_INDEX; ++i)
         {
             if (0 != (num & temp))
             {
@@ -75,13 +54,13 @@ public class FixedObstaclePositioningMap
     {
         int temp = 1;
 
-        for (int i = 0; i < ConstantValue.MAX_POSITION_INDEX; ++i)
+        for (int i = 0; i < ConstantValue.MAX_FIXED_OBSTACLE_POSITION_INDEX; ++i)
         {
             if (0 == ((lhs & temp) | (rhs & temp)))
             {
                 _lastPositioningIndex = lhs | rhs;
 
-                _listCreatablePositions = lhs;
+                _creatablePosition = lhs;
 
                 return;
             }
