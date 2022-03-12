@@ -7,7 +7,7 @@ public class DeadLine : MonoBehaviour
     [SerializeField] private RandomTiles _randomTiles = null;
     [SerializeField] private float _moveSpeed = 0f;
 
-    private Rigidbody _rigidBody;
+    private Rigidbody _rigidBody = null;
 
     private Vector3 _distance = Vector3.zero;
 
@@ -21,10 +21,6 @@ public class DeadLine : MonoBehaviour
     private void Update()
     {
         Move();
-    }
-
-    private void LateUpdate()
-    {
     }
 
     private void OnTriggerExit(Collider other)
