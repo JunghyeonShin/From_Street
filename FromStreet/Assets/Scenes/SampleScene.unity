@@ -1085,7 +1085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 2036976239}
-  _moveSpeed: 1
+  _moveSpeed: 0
 --- !u!4 &1083954842 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1495089728573207297, guid: f86823fadcd6d82458c2c7201f1dff12, type: 3}
@@ -1590,6 +1590,7 @@ GameObject:
   - component: {fileID: 2036976243}
   - component: {fileID: 2036976242}
   - component: {fileID: 2036976241}
+  - component: {fileID: 2036976245}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1666,6 +1667,19 @@ CapsuleCollider:
   m_Height: 0.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.35, z: 0}
+--- !u!114 &2036976245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036976239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6008abdfb16d19843ba5a6848a3c45bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotateSpeed: 90
 --- !u!1 &2139548374
 GameObject:
   m_ObjectHideFlags: 0
