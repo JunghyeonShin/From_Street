@@ -10,37 +10,11 @@ public class Pavement : MonoBehaviour, IObjectPoolMessage
 
     private ObstacleSpawn _obstacleSpawn = null;
 
-    private const string OBSTACLE_SPAWN_MANAGER = "Obstacle Spawn Manager";
-
-    private void SetFixedObstacle(int pos, float posZ)
-    {
-        int pushedObstacleCount = 0;
-        int temp = 1;
-
-        for (int i = 0; i < ConstantValue.MAX_POSITION_INDEX; ++i)
-        {
-            if (temp == (pos & temp))
-            {
-                _listPushedObstacles.Add(_obstacleSpawn.GiveObstacle(EObstacleTypes.Tree));
-
-                float posX = 6f - (i * 2f);
-
-                Vector3 currPos = new Vector3(posX, 0f, posZ);
-
-                _listPushedObstacles[pushedObstacleCount].transform.position = currPos;
-
-                ++pushedObstacleCount;
-            }
-
-            temp <<= 1;
-        }
-    }
-
     public void OnPulled(float posZ)
     {
         _fixedObjectPositioningMap.CreateFixedObstaclePosition();
 
-        GameObject spawnManager = GameObject.Find(OBSTACLE_SPAWN_MANAGER);
+        GameObject spawnManager = GameObject.Find(ConstantValue.OBSTACLE_SPAWN_MANAGER);
 
         _obstacleSpawn = spawnManager.GetComponent<ObstacleSpawn>();
 
@@ -57,5 +31,29 @@ public class Pavement : MonoBehaviour, IObjectPoolMessage
         }
 
         _listPushedObstacles.Clear();
+    }
+
+    private void SetFixedObstacle(int pos, float posZ)
+    {
+        int pushedObstacleCount = 0;
+        int temp = 1;
+
+        for (int i = 0; i < ConstantValue.MAX_FIXED_OBSTACLE_POSITION_INDEX; ++i)
+        {
+            if (temp == (pos & temp))
+            {
+                _listPushedObstacles.Add(_obstacleSpawn.GiveObstacle(EObstacleTypes.Tree));
+
+                float posX = 6f - (i * 2f);
+
+                Vector3 currPos = new Vector3(posX, 0f, posZ);
+
+                _listPushedObstacles[pushedObstacleCount].transform.position = currPos;
+
+                ++pushedObstacleCount;
+            }
+
+            temp <<= 1;
+        }
     }
 }
