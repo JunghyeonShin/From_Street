@@ -78,6 +78,4 @@ public class PlayerMovement : MonoBehaviour
 
         //_playerTransform.Rotate(new Vector3(0f, 90f, 0f) * Time.deltaTime);
     }
-
-
 }
