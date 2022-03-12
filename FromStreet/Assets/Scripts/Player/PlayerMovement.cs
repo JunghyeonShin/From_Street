@@ -4,78 +4,128 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private PlayerInput _playerInput = null;
+    private BezierCurve _bezierCurve = new BezierCurve();
 
-    private Rigidbody _playerRigidBody = null;
+    private PlayerInput _playerInput = null;
 
     private Transform _playerTransform = null;
 
-    private const float MOVE_SPEED = 2f;
-    private const float ROTATION_DIRECTION = 90f;
+    private Vector3 _bezierStartPoint = new Vector3();
+    private Vector3 _bezierTempPoint = new Vector3();
+    private Vector3 _bezierEndPoint = new Vector3();
+
+    private EPlayerMoveDirections _playerDir = EPlayerMoveDirections.Forward;
+
+    private bool _isJumpMoving = false;
+    private bool _sendCoroutineStartMessage = false;
+
+    private float _elapsedTime = 0f;
+
+    private readonly Vector3 _moveToForwardBetweenTwoPoints = new Vector3(0f, 1f, 1f);
+    private readonly Vector3 _moveToBackBetweenTwoPoints = new Vector3(0f, 1f, -1f);
+    private readonly Vector3 _moveToLeftBetweenTwoPoints = new Vector3(-1f, 1f, 0f);
+    private readonly Vector3 _moveToRightBetweenTwoPoints = new Vector3(1f, 1f, 0f);
+
+    private readonly Vector3 _nextForwardPoint = new Vector3(0f, 0f, 2f);
+    private readonly Vector3 _nextBackPoint = new Vector3(0f, 0f, -2f);
+    private readonly Vector3 _nextLeftPoint = new Vector3(-2f, 0f, 0f);
+    private readonly Vector3 _nextRightPoint = new Vector3(2f, 0f, 0f);
 
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
-        _playerRigidBody = GetComponent<Rigidbody>();
         _playerTransform = GetComponent<Transform>();
     }
 
     private void Update()
     {
-        Rotation();
+        if (false == _isJumpMoving)
+        {
+            CheckInputMessage();
 
-        Move();   
+            MakeBezierPoint();
+        }
+
+        if (_sendCoroutineStartMessage)
+        {
+            StartCoroutine(JumpMoving());
+        }
     }
 
-    private void Move()
+    private void CheckInputMessage()
     {
-        Vector3 moveVec = Vector3.zero;
-
         if (_playerInput.MoveForward)
         {
-            moveVec = new Vector3(0f, 0f, MOVE_SPEED);
+            _playerDir = EPlayerMoveDirections.Forward;
+
+            _isJumpMoving = true;
+            _sendCoroutineStartMessage = true;
         }
         else if (_playerInput.MoveBack)
         {
-            moveVec = new Vector3(0f, 0f, -MOVE_SPEED);
+            _playerDir = EPlayerMoveDirections.Back;
+
+            _isJumpMoving = true;
+            _sendCoroutineStartMessage = true;
         }
         else if (_playerInput.MoveLeft)
         {
-            moveVec = new Vector3(-MOVE_SPEED, 0f, 0f);
+            _playerDir = EPlayerMoveDirections.Left;
+
+            _isJumpMoving = true;
+            _sendCoroutineStartMessage = true;
         }
         else if (_playerInput.MoveRight)
         {
-            moveVec = new Vector3(MOVE_SPEED, 0f, 0f);
-        }
+            _playerDir = EPlayerMoveDirections.Right;
 
-        _playerRigidBody.position += moveVec;
+            _isJumpMoving = true;
+            _sendCoroutineStartMessage = true;
+        }
     }
 
-    private void Rotation()
+    private void MakeBezierPoint()
     {
-        Vector3 rotationVec = Vector3.zero;
+        _bezierStartPoint = _playerTransform.position;
 
-        if (_playerInput.MoveForward)
+        switch (_playerDir)
         {
-            rotationVec = new Vector3(0f, 0f, 0f);
-            _playerTransform.rotation = Quaternion.Euler(rotationVec);
+            case EPlayerMoveDirections.Forward:
+                _bezierTempPoint = _playerTransform.position + _moveToForwardBetweenTwoPoints;
+                _bezierEndPoint = _playerTransform.position + _nextForwardPoint;
+                break;
+            case EPlayerMoveDirections.Back:
+                _bezierTempPoint = _playerTransform.position + _moveToBackBetweenTwoPoints;
+                _bezierEndPoint = _playerTransform.position + _nextBackPoint;
+                break;
+            case EPlayerMoveDirections.Left:
+                _bezierTempPoint = _playerTransform.position + _moveToLeftBetweenTwoPoints;
+                _bezierEndPoint = _playerTransform.position + _nextLeftPoint;
+                break;
+            case EPlayerMoveDirections.Right:
+                _bezierTempPoint = _playerTransform.position + _moveToRightBetweenTwoPoints;
+                _bezierEndPoint = _playerTransform.position + _nextRightPoint;
+                break;
+            default:
+                break;
         }
-        else if (_playerInput.MoveBack)
+    }
+
+    private IEnumerator JumpMoving()
+    {
+        _sendCoroutineStartMessage = false;
+
+        while (_elapsedTime <= 1)
         {
-            rotationVec = new Vector3(0f, ROTATION_DIRECTION * 2, 0f);
-            _playerTransform.rotation = Quaternion.Euler(rotationVec);
-        }
-        else if (_playerInput.MoveLeft)
-        {
-            rotationVec = new Vector3(0f, -ROTATION_DIRECTION, 0f);
-            _playerTransform.rotation = Quaternion.Euler(rotationVec);
-        }
-        else if (_playerInput.MoveRight)
-        {
-            rotationVec = new Vector3(0f, ROTATION_DIRECTION, 0f);
-            _playerTransform.rotation = Quaternion.Euler(rotationVec);
+            _playerTransform.position = _bezierCurve.OnePointBezierCurve(_bezierStartPoint, _bezierTempPoint, _bezierEndPoint, _elapsedTime);
+
+            _elapsedTime += Time.deltaTime;
+
+            yield return null;
         }
 
-        //_playerTransform.Rotate(new Vector3(0f, 90f, 0f) * Time.deltaTime);
+        _elapsedTime = 0f;
+
+        _isJumpMoving = false;
     }
 }
