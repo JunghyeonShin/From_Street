@@ -1013,6 +1013,7 @@ MonoBehaviour:
     _minValue: 1
     _maxValue: 3
     _objSize: 20
+  _initTileNumber: 10
 --- !u!4 &1421840779 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2982172585590887822, guid: 2e1bfb277f948bb42baa30d0386634a5, type: 3}

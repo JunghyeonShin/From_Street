@@ -33,6 +33,8 @@ public class RandomTiles : MonoBehaviour
 {
     [SerializeField] private List<TileInfomations> _tileInfos = null;
 
+    [SerializeField] private int _initTileNumber = 0;
+
     private Dictionary<ETileTypes, ObjectPool> _tileDictionaries = new Dictionary<ETileTypes, ObjectPool>();
 
     private Queue<GameObject> _createdTiles = new Queue<GameObject>();
@@ -45,8 +47,6 @@ public class RandomTiles : MonoBehaviour
     private float _currPosZ = 6f;
 
     private const int READY_TILE_NUMBER = 2;
-    private const int MAX_TILE_NUMBER = 20;
-
 
     public ETileTypes CreateNextTileType { get { return _createNextTileType; } }
 
@@ -87,7 +87,7 @@ public class RandomTiles : MonoBehaviour
             PushTile(ETileTypes.Pavement);
         }
 
-        while (_createdTiles.Count <= MAX_TILE_NUMBER)
+        while (_createdTiles.Count <= _initTileNumber)
         {
             ListUpTileType();
 
