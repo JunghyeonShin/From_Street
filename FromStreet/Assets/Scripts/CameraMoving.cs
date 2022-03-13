@@ -10,7 +10,7 @@ public class CameraMoving : MonoBehaviour
 
     [SerializeField] private float _reviseCameraPositionTime = 0f;
 
-    private enum ECameraDirections { None, Forward, Left, Right, }
+    private enum ECameraChasingDirections { None, Forward, Left, Right, }
 
     private BezierCurve _bezierCurve = new BezierCurve();
 
@@ -20,7 +20,7 @@ public class CameraMoving : MonoBehaviour
     private Vector3 _bezierTempPoint = new Vector3();
     private Vector3 _bezierEndPoint = new Vector3();
 
-    private ECameraDirections _cameraDirection = ECameraDirections.None;
+    private ECameraChasingDirections _cameraDirection = ECameraChasingDirections.None;
 
     private float _horizontalDistance = 0f;
     private float _verticalDistance = 0f;
@@ -43,37 +43,42 @@ public class CameraMoving : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.IsGameOver)
+        {
+            return;
+        }
+
         Move();
     }
 
     private void LateUpdate()
     {
-        if (false == _isChasingPlayer && ECameraDirections.None == _cameraDirection)
+        if (false == _isChasingPlayer && ECameraChasingDirections.None == _cameraDirection)
         {
             _horizontalDistance = _player.transform.position.x - _cameraTransform.position.x;
             _verticalDistance = _player.transform.position.z - _cameraTransform.position.z;
 
             if (_verticalDistance > 8.5f)
             {
-                _cameraDirection = ECameraDirections.Forward;
+                _cameraDirection = ECameraChasingDirections.Forward;
 
                 _isChasingPlayer = true;
             }
             else if (_horizontalDistance < -4.5f)
             {
-                _cameraDirection = ECameraDirections.Left;
+                _cameraDirection = ECameraChasingDirections.Left;
 
                 _isChasingPlayer = true;
             }
             else if (_horizontalDistance > -1.5f)
             {
-                _cameraDirection = ECameraDirections.Right;
+                _cameraDirection = ECameraChasingDirections.Right;
 
                 _isChasingPlayer = true;
             }
             else
             {
-                _cameraDirection = ECameraDirections.None;
+                _cameraDirection = ECameraChasingDirections.None;
             }
 
             MakeBezierPoint();
@@ -88,15 +93,15 @@ public class CameraMoving : MonoBehaviour
 
         switch (_cameraDirection)
         {
-            case ECameraDirections.Forward:
+            case ECameraChasingDirections.Forward:
                 _bezierTempPoint = _bezierStartPoint + _moveToForwardBetweenTwoPoints;
                 _bezierEndPoint = _bezierStartPoint + _nextForwardPoint;
                 break;
-            case ECameraDirections.Left:
+            case ECameraChasingDirections.Left:
                 _bezierTempPoint = _bezierStartPoint + _moveToLeftBetweenTwoPoints;
                 _bezierEndPoint = _bezierStartPoint + _nextLeftPoint;
                 break;
-            case ECameraDirections.Right:
+            case ECameraChasingDirections.Right:
                 _bezierTempPoint = _bezierStartPoint + _moveToRightBetweenTwoPoints;
                 _bezierEndPoint = _bezierStartPoint + _nextRightPoint;
                 break;
@@ -132,6 +137,6 @@ public class CameraMoving : MonoBehaviour
             yield return null;
         }
 
-        _cameraDirection = ECameraDirections.None;
+        _cameraDirection = ECameraChasingDirections.None;
     }
 }
