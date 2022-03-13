@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     private EPlayerMoveDirections _playerDirection = EPlayerMoveDirections.None;
 
+    private bool _isDie = false;
     private bool _isJumpMoving = false;
 
     private readonly Vector3 _moveToForwardBetweenTwoPoints = new Vector3(0f, 1f, 1f);
@@ -31,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
     private readonly Vector3 _nextRightPoint = new Vector3(2f, 0f, 0f);
 
     public EPlayerMoveDirections PlayerMoveDirection { get { return _playerDirection; } }
+
+    public bool PlayerDie { get { return _isDie; } }
 
     private void Start()
     {
@@ -47,6 +50,17 @@ public class PlayerMovement : MonoBehaviour
             MakeBezierPoint();
 
             StartCoroutine(JumpMoving());
+        }
+
+        // юс╫ц 
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            _isDie = true;
+        }
+
+        if (_isDie)
+        {
+            GameManager.Instance.EndGame();
         }
     }
 

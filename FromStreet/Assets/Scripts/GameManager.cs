@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager _instance = null;
-
     public static GameManager Instance
     {
         get
@@ -18,6 +16,10 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
+
+    private static GameManager _instance = null;
+
+    private bool _isGameStart = false;
 
     public bool IsGameOver { get; private set; }
 
@@ -38,8 +40,10 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (false == _isGameStart && Input.GetKeyDown(KeyCode.W))
         {
+            _isGameStart = true;
+
             IsGameOver = false;
         }
     }
