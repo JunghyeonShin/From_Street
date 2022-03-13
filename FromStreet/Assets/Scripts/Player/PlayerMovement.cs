@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (false == _isJumpMoving)
+        if (false == _isJumpMoving && EPlayerMoveDirections.None == _playerDirection)
         {
             CheckInputMessage();
 
@@ -128,5 +128,7 @@ public class PlayerMovement : MonoBehaviour
 
             yield return null;
         }
+
+        _playerDirection = EPlayerMoveDirections.None;
     }
 }
