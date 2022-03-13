@@ -13,7 +13,7 @@ public class FixedObjectPositioningMap
     private int _creatablePosition = 0;
     private int _randomNumber = 0;
 
-    private const int TOTAL_CREATABLE_POSITION_INDEX = 4;
+    private const int TOTAL_CREATABLE_POSITION_INDEX = 3;
 
     public int CreatablePosition { get { return _creatablePosition; } }
 
