@@ -220,21 +220,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Street
       objectReference: {fileID: 0}
-    - target: {fileID: 101538, guid: fe8692937f870a549a945bf36f3f41df, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 495470, guid: fe8692937f870a549a945bf36f3f41df, type: 3}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 495470, guid: fe8692937f870a549a945bf36f3f41df, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3.33
-      objectReference: {fileID: 0}
-    - target: {fileID: 495470, guid: fe8692937f870a549a945bf36f3f41df, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 495470, guid: fe8692937f870a549a945bf36f3f41df, type: 3}
       propertyPath: m_LocalPosition.x
