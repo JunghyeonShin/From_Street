@@ -48,6 +48,8 @@ public class River : MonoBehaviour, IObjectPoolMessage
 
     private void SetRiverObstacle(float posZ)
     {
+        float randomSpeed = Random.Range(2f, 4f);
+
         for (int i = 0; i < _poolingMaxRiverObstacleNum; ++i)
         {
             _listPushedObstacles.Add(_obstacleSpawn.GiveObstacle(EObstacleTypes.Boat));
@@ -58,18 +60,20 @@ public class River : MonoBehaviour, IObjectPoolMessage
             {
                 _spawnPosition.x += (i * randomNum);
 
-                _listPushedObstacles[i].transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                _listPushedObstacles[i].transform.rotation = Quaternion.Euler(0f, -90f, 0f);
             }
             else
             {
                 _spawnPosition.x -= (i * randomNum);
 
-                _listPushedObstacles[i].transform.rotation = Quaternion.Euler(0f, -180f, 0f);
+                _listPushedObstacles[i].transform.rotation = Quaternion.Euler(0f, 90f, 0f);
             }
 
-            Vector3 currPos = new Vector3(_spawnPosition.x, 0f, posZ);
+            Vector3 currPos = new Vector3(_spawnPosition.x, _spawnPosition.y, posZ);
 
             _listPushedObstacles[i].transform.position = currPos;
+
+            _listPushedObstacles[i].gameObject.GetComponent<IMovableObstacleMessage>()?.SetMovableObstacleInfomations(randomSpeed, _listPushedObstacles[i].gameObject.transform);
         }
     }
 }
