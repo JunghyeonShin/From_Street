@@ -7,20 +7,15 @@ using UnityEngine;
 
 public class FixedObjectPositioningMap
 {
-    private Queue<ETileTypes> _listTiles = new Queue<ETileTypes>();
-
     private int _lastPositioningIndex = 0;
     private int _creatablePosition = 0;
     private int _randomNumber = 0;
-
-    private const int CREATABLE_BIT_NUMBER = 256;
-    private const int TOTAL_CREATABLE_POSITION_INDEX = 3;
 
     public int CreatablePosition { get { return _creatablePosition; } }
 
     public void CreateFixedObstaclePosition()
     {
-        _randomNumber = UnityEngine.Random.Range(0, CREATABLE_BIT_NUMBER);
+        _randomNumber = UnityEngine.Random.Range(0, ConstantValue.CREATABLE_BIT_NUMBER);
 
         CreateRandomNumber(_randomNumber);
 
@@ -38,9 +33,9 @@ public class FixedObjectPositioningMap
             {
                 ++count;
 
-                if (count > TOTAL_CREATABLE_POSITION_INDEX)
+                if (count > ConstantValue.TOTAL_CREATABLE_POSITION_INDEX)
                 {
-                    _randomNumber = UnityEngine.Random.Range(0, CREATABLE_BIT_NUMBER);
+                    _randomNumber = UnityEngine.Random.Range(0, ConstantValue.CREATABLE_BIT_NUMBER);
 
                     CreateRandomNumber(_randomNumber);
                     return;

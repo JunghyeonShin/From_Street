@@ -44,7 +44,7 @@ public class Pavement : MonoBehaviour, IObjectPoolMessage
             {
                 _listPushedObstacles.Add(_obstacleSpawn.GiveObstacle(EObstacleTypes.Tree));
 
-                float posX = 6f - (i * 2f);
+                float posX = ConstantValue.FIXED_OBSTACLE_INITIAL_POSITION_X - (i * 2f);
 
                 Vector3 currPos = new Vector3(posX, 0f, posZ);
 
