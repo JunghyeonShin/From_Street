@@ -48,12 +48,12 @@ public class CameraMoving : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (false == _isChasingPlayer)
+        if (false == _isChasingPlayer && ECameraDirections.None == _cameraDirection)
         {
             _horizontalDistance = _player.transform.position.x - _cameraTransform.position.x;
             _verticalDistance = _player.transform.position.z - _cameraTransform.position.z;
 
-            if (_verticalDistance > 6.5f)
+            if (_verticalDistance > 8.5f)
             {
                 _cameraDirection = ECameraDirections.Forward;
 
@@ -77,7 +77,7 @@ public class CameraMoving : MonoBehaviour
             }
 
             MakeBezierPoint();
-            
+
             StartCoroutine(ChasingPlayer());
         }
     }
@@ -131,5 +131,7 @@ public class CameraMoving : MonoBehaviour
 
             yield return null;
         }
+
+        _cameraDirection = ECameraDirections.None;
     }
 }
