@@ -6,6 +6,8 @@ public class Road : MonoBehaviour, IObjectPoolMessage
 {
     [SerializeField] private GameObject[] _child = null;
 
+    [SerializeField] private int _poolingMaxRoadObstacleNum = 0;
+
     [SerializeField] private float[] _intervals = null;
 
     private List<GameObject> _listPushedObstacles = new List<GameObject>();
@@ -14,7 +16,6 @@ public class Road : MonoBehaviour, IObjectPoolMessage
 
     private Vector3 _spawnPosition = Vector3.zero;
 
-    private const int POOLING_MAX_ROAD_OBSTACLE_NUM = 3;
 
     public void OnPulled(float posZ)
     {
@@ -48,7 +49,7 @@ public class Road : MonoBehaviour, IObjectPoolMessage
 
     private void SetRoadObstacle(float posZ)
     {
-        for (int i = 0; i < POOLING_MAX_ROAD_OBSTACLE_NUM; ++i)
+        for (int i = 0; i < _poolingMaxRoadObstacleNum; ++i)
         {
             _listPushedObstacles.Add(_obstacleSpawn.GiveObstacle(EObstacleTypes.Car));
 
