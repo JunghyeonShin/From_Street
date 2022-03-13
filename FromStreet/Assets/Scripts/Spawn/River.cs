@@ -6,6 +6,8 @@ public class River : MonoBehaviour, IObjectPoolMessage
 {
     [SerializeField] private GameObject[] _child = null;
 
+    [SerializeField] private int _poolingMaxRiverObstacleNum = 0;
+
     [SerializeField] private float[] _intervals = null;
 
     private List<GameObject> _listPushedObstacles = new List<GameObject>();
@@ -13,8 +15,6 @@ public class River : MonoBehaviour, IObjectPoolMessage
     private ObstacleSpawn _obstacleSpawn = null;
 
     private Vector3 _spawnPosition = Vector3.zero;
-
-    private const int POOLING_MAX_RIVER_OBSTACLE_NUM = 4;
 
     public void OnPulled(float posZ)
     {
@@ -48,7 +48,7 @@ public class River : MonoBehaviour, IObjectPoolMessage
 
     private void SetRiverObstacle(float posZ)
     {
-        for (int i = 0; i < POOLING_MAX_RIVER_OBSTACLE_NUM; ++i)
+        for (int i = 0; i < _poolingMaxRiverObstacleNum; ++i)
         {
             _listPushedObstacles.Add(_obstacleSpawn.GiveObstacle(EObstacleTypes.Boat));
 

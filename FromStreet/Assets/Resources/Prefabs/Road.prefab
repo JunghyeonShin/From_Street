@@ -124,9 +124,10 @@ MonoBehaviour:
   _child:
   - {fileID: 1848992491818178741}
   - {fileID: 353252805194582999}
+  _poolingMaxRoadObstacleNum: 5
   _intervals:
+  - 4
   - 6
-  - 15
 --- !u!1 &5509107131976551769
 GameObject:
   m_ObjectHideFlags: 0
