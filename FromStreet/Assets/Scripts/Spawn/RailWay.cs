@@ -39,19 +39,25 @@ public class RailWay : MonoBehaviour, IObjectPoolMessage
 
     private void SetRailWayObstacle(float posZ)
     {
+        float moveAwayFromStartPoint = Random.Range(1f, 3f);
+
         _pushedObstacle = _obstacleSpawn.GiveObstacle(EObstacleTypes.Train);
 
         if (_spawnPosition.x >= 0)
         {
-            _pushedObstacle.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+            _pushedObstacle.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
         }
         else
         {
-            _pushedObstacle.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+            _pushedObstacle.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
         }
 
-        Vector3 currPos = new Vector3(_spawnPosition.x, 0f, posZ);
+        _spawnPosition.x *= moveAwayFromStartPoint;
+
+        Vector3 currPos = new Vector3(_spawnPosition.x, _spawnPosition.y, posZ);
 
         _pushedObstacle.transform.position = currPos;
+
+        _pushedObstacle.gameObject.GetComponent<IMovableObstacleMessage>()?.SetMovableObstacleInfomations(20f, _pushedObstacle.gameObject.transform);
     }
 }

@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353252805194582999}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 23, y: 0, z: 0}
+  m_LocalPosition: {x: 23, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5509107131873957586}
@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1848992491818178741}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23, y: 0, z: 0}
+  m_LocalPosition: {x: -23, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5509107131873957586}
@@ -118,13 +118,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5509107131873957585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c99d11f4c21a4524cb05146bca8f19f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 676569cb2440d1949bd55974d009ca05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _child:
   - {fileID: 1848992491818178741}
   - {fileID: 353252805194582999}
-  _poolingMaxRoadObstacleNum: 5
+  _poolingMaxRoadObstacleNum: 4
   _intervals:
   - 4
   - 6
