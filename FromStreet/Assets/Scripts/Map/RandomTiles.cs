@@ -46,7 +46,6 @@ public class RandomTiles : MonoBehaviour
 
     private float _currPosZ = 6f;
 
-    private const int READY_TILE_NUMBER = 2;
 
     public ETileTypes CreateNextTileType { get { return _createNextTileType; } }
 
@@ -82,7 +81,7 @@ public class RandomTiles : MonoBehaviour
 
     private void CreateInitTiles()
     {
-        for (int i = 0; i < READY_TILE_NUMBER; ++i)
+        for (int i = 0; i < ConstantValue.READY_TILE_NUMBER; ++i)
         {
             PushTile(ETileTypes.Pavement);
         }
