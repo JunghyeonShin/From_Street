@@ -27,6 +27,8 @@ public class CameraMoving : MonoBehaviour
 
     private bool _isChasingPlayer = false;
 
+    private const int STOP_HORIZONTAL_CHASING = 4;
+
     private readonly Vector3 _moveToForwardBetweenTwoPoints = new Vector3(0f, 0f, 1.25f);
     private readonly Vector3 _moveToLeftBetweenTwoPoints = new Vector3(-1.25f, 0f, 0f);
     private readonly Vector3 _moveToRightBetweenTwoPoints = new Vector3(1.25f, 0f, 0f);
@@ -64,13 +66,13 @@ public class CameraMoving : MonoBehaviour
 
                 _isChasingPlayer = true;
             }
-            else if (_horizontalDistance < -4.5f)
+            else if (_horizontalDistance < -4.5f && _player.transform.position.x > -STOP_HORIZONTAL_CHASING)
             {
                 _cameraDirection = ECameraChasingDirections.Left;
 
                 _isChasingPlayer = true;
             }
-            else if (_horizontalDistance > -1.5f)
+            else if (_horizontalDistance > -1.5f && _player.transform.position.x < STOP_HORIZONTAL_CHASING)
             {
                 _cameraDirection = ECameraChasingDirections.Right;
 
