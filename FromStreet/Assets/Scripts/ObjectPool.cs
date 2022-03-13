@@ -20,6 +20,24 @@ public class ObjectPool
         }
     }
 
+    public GameObject GiveObject()
+    {
+        GameObject pulledObject;
+
+        if (_pooledObjects.Count > ConstantValue.EMPTY)
+        {
+            pulledObject = _pooledObjects.Dequeue();
+        }
+        else
+        {
+            pulledObject = CreateNewObject();
+        }
+
+        pulledObject.SetActive(true);
+
+        return pulledObject;
+    }
+
     public GameObject GiveObject(float currPosZ)
     {
         GameObject pulledObject;

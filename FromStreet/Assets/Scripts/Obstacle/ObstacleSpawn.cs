@@ -38,7 +38,7 @@ public class ObstacleSpawn : MonoBehaviour
 
     public GameObject GiveObstacle(EObstacleTypes type)
     {
-        return _obstacleDitionaries[type].GiveObject(0);
+        return _obstacleDitionaries[type].GiveObject();
     }
 
     public void ReturnObstacle(EObstacleTypes type, GameObject obj)
