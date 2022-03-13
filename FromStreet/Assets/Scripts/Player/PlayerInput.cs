@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    [SerializeField] private PlayerMovement _playerMovement = null;
+
     public bool MoveForward { get; private set; }
     public bool MoveBack {get; private set;}
     public bool MoveLeft {get; private set;}
@@ -11,7 +13,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.IsGameOver)
+        if (GameManager.Instance.IsGameOver || _playerMovement.PlayerDie)
         {
             return;
         }
