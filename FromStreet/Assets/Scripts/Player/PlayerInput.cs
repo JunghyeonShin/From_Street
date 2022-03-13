@@ -11,6 +11,11 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.IsGameOver)
+        {
+            return;
+        }
+
         MoveForward = Input.GetKeyDown(KeyCode.W);
         MoveBack = Input.GetKeyDown(KeyCode.S);
         MoveLeft = Input.GetKeyDown(KeyCode.A);
