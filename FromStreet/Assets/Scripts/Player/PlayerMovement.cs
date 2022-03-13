@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private float _moveTime = 0f;
+
     private BezierCurve _bezierCurve = new BezierCurve();
 
     private PlayerInput _playerInput = null;
@@ -14,12 +16,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _bezierTempPoint = new Vector3();
     private Vector3 _bezierEndPoint = new Vector3();
 
-    private EPlayerMoveDirections _playerDir = EPlayerMoveDirections.Forward;
+    private EPlayerMoveDirections _playerDirection = EPlayerMoveDirections.None;
 
     private bool _isJumpMoving = false;
-    private bool _sendCoroutineStartMessage = false;
-
-    private float _elapsedTime = 0f;
 
     private readonly Vector3 _moveToForwardBetweenTwoPoints = new Vector3(0f, 1f, 1f);
     private readonly Vector3 _moveToBackBetweenTwoPoints = new Vector3(0f, 1f, -1f);
@@ -30,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     private readonly Vector3 _nextBackPoint = new Vector3(0f, 0f, -2f);
     private readonly Vector3 _nextLeftPoint = new Vector3(-2f, 0f, 0f);
     private readonly Vector3 _nextRightPoint = new Vector3(2f, 0f, 0f);
+
+    public EPlayerMoveDirections PlayerMoveDirection { get { return _playerDirection; } }
 
     private void Start()
     {
@@ -44,10 +45,7 @@ public class PlayerMovement : MonoBehaviour
             CheckInputMessage();
 
             MakeBezierPoint();
-        }
 
-        if (_sendCoroutineStartMessage)
-        {
             StartCoroutine(JumpMoving());
         }
     }
@@ -56,31 +54,31 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_playerInput.MoveForward)
         {
-            _playerDir = EPlayerMoveDirections.Forward;
+            _playerDirection = EPlayerMoveDirections.Forward;
 
             _isJumpMoving = true;
-            _sendCoroutineStartMessage = true;
         }
         else if (_playerInput.MoveBack)
         {
-            _playerDir = EPlayerMoveDirections.Back;
+            _playerDirection = EPlayerMoveDirections.Back;
 
             _isJumpMoving = true;
-            _sendCoroutineStartMessage = true;
         }
         else if (_playerInput.MoveLeft)
         {
-            _playerDir = EPlayerMoveDirections.Left;
+            _playerDirection = EPlayerMoveDirections.Left;
 
             _isJumpMoving = true;
-            _sendCoroutineStartMessage = true;
         }
         else if (_playerInput.MoveRight)
         {
-            _playerDir = EPlayerMoveDirections.Right;
+            _playerDirection = EPlayerMoveDirections.Right;
 
             _isJumpMoving = true;
-            _sendCoroutineStartMessage = true;
+        }
+        else
+        {
+            _playerDirection = EPlayerMoveDirections.None;
         }
     }
 
@@ -88,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _bezierStartPoint = _playerTransform.position;
 
-        switch (_playerDir)
+        switch (_playerDirection)
         {
             case EPlayerMoveDirections.Forward:
                 _bezierTempPoint = _playerTransform.position + _moveToForwardBetweenTwoPoints;
@@ -113,19 +111,22 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator JumpMoving()
     {
-        _sendCoroutineStartMessage = false;
+        float elapsedTime = 0f;
 
-        while (_elapsedTime <= 1)
+        while (_isJumpMoving)
         {
-            _playerTransform.position = _bezierCurve.OnePointBezierCurve(_bezierStartPoint, _bezierTempPoint, _bezierEndPoint, _elapsedTime);
+            elapsedTime += Time.deltaTime;
 
-            _elapsedTime += Time.deltaTime;
+            if (elapsedTime >= _moveTime)
+            {
+                elapsedTime = _moveTime;
+
+                _isJumpMoving = false;
+            }
+
+            _playerTransform.position = _bezierCurve.OnePointBezierCurve(_bezierStartPoint, _bezierTempPoint, _bezierEndPoint, elapsedTime / _moveTime);
 
             yield return null;
         }
-
-        _elapsedTime = 0f;
-
-        _isJumpMoving = false;
     }
 }

@@ -2,6 +2,7 @@
 
 public enum EPlayerMoveDirections 
 {
+    None,
     Forward,
     Back,
     Left,
