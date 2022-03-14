@@ -7,4 +7,3 @@ public enum ECameraChasingDirections
     Left, 
     Right, 
 }
-}
