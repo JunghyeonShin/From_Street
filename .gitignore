@@ -74,11 +74,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# ignore asset files
-FromStreet/Assets/Resources/MapAssets/
-FromStreet/Assets/Resources/Meshtint Free Chicken Mega Toon Series/
-FromStreet/Assets/Resources/MS/
-
 # ignore library and temp
 FromStreet/Library/
 FromStreet/UnityGenerated/
