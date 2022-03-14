@@ -7,21 +7,7 @@ public class DeadLine : MonoBehaviour
     [SerializeField] private RandomTiles _randomTiles = null;
     [SerializeField] private float _moveSpeed = 0f;
 
-    private Rigidbody _rigidBody = null;
-
-    private Vector3 _distance = Vector3.zero;
-
     private const int LAYER_TILE = 3;
-
-    private void Awake()
-    {
-        _rigidBody = GetComponent<Rigidbody>();
-    }
-
-    private void Update()
-    {
-        Move();
-    }
 
     private void OnTriggerExit(Collider other)
     {
@@ -49,12 +35,5 @@ public class DeadLine : MonoBehaviour
 
             _randomTiles.ReturnTile(type, other.gameObject);
         }
-    }
-
-    private void Move()
-    {
-        Vector3 moveVec = _moveSpeed * Time.deltaTime * transform.forward;
-
-        _rigidBody.position += moveVec;
     }
 }
