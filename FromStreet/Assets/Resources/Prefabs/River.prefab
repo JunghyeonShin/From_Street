@@ -287,10 +287,10 @@ MonoBehaviour:
   _child:
   - {fileID: 8717646877007461277}
   - {fileID: 8717646877259202466}
-  _poolingMaxRiverObstacleNum: 5
+  _poolingMaxRiverObstacleNum: 4
   _intervals:
   - 4
-  - 9
+  - 6
 --- !u!1 &8717646878663352747
 GameObject:
   m_ObjectHideFlags: 0

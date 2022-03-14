@@ -48,7 +48,7 @@ public class Road : MonoBehaviour, IObjectPoolMessage
 
     private void SetRoadObstacle(float posZ)
     {
-        float randomSpeed = Random.Range(2f, 4f);
+        float randomSpeed = Random.Range(2f, 6f);
 
         for (int i = 0; i < _poolingMaxRoadObstacleNum; ++i)
         {
@@ -74,7 +74,7 @@ public class Road : MonoBehaviour, IObjectPoolMessage
 
             _listPushedObstacles[i].transform.position = currPos;
 
-            _listPushedObstacles[i].gameObject.GetComponent<IMovableObstacleMessage>()?.SetMovableObstacleInfomations(randomSpeed, _listPushedObstacles[i].gameObject.transform);
+            _listPushedObstacles[i].gameObject.GetComponent<IMovableObstacleMessage>()?.SetMovableObstacleInfomations(randomSpeed, _spawnPosition, _listPushedObstacles[i].gameObject.transform);
         }
     }
 }

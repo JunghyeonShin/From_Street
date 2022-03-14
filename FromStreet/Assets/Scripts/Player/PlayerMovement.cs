@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Transform _playerTransform = null;
 
+    private RaycastHit _rayHit;
+
     private Vector3 _bezierStartPoint = new Vector3();
     private Vector3 _bezierTempPoint = new Vector3();
     private Vector3 _bezierEndPoint = new Vector3();
@@ -20,6 +22,11 @@ public class PlayerMovement : MonoBehaviour
 
     private bool _isDie = false;
     private bool _isJumpMoving = false;
+
+    private const float MAX_RAY_DISTANCE = 20f;
+
+    private const int LAYER_NON_MOVABLE_AREA = 6;
+    private const int LAYER_TREE = 7;
 
     private readonly Vector3 _moveToForwardBetweenTwoPoints = new Vector3(0f, 1f, 1f);
     private readonly Vector3 _moveToBackBetweenTwoPoints = new Vector3(0f, 1f, -1f);
@@ -49,10 +56,15 @@ public class PlayerMovement : MonoBehaviour
 
             MakeBezierPoint();
 
+            CheckMovablePoint();
+
             StartCoroutine(JumpMoving());
         }
 
-        // 임시 
+        // 임시
+        Debug.DrawRay(_bezierEndPoint, _playerTransform.up * MAX_RAY_DISTANCE, Color.red);
+
+        // 임시
         if (Input.GetKeyDown(KeyCode.K))
         {
             _isDie = true;
@@ -93,6 +105,21 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             _playerDirection = EPlayerMoveDirections.None;
+        }
+    }
+
+    private void CheckMovablePoint()
+    {
+        Vector3 rayPosition = new Vector3(_bezierEndPoint.x, 12f, _bezierEndPoint.z);
+
+        if (Physics.Raycast(rayPosition, Vector3.down, out _rayHit, MAX_RAY_DISTANCE))
+        {
+            if (LAYER_NON_MOVABLE_AREA == _rayHit.transform.gameObject.layer || LAYER_TREE == _rayHit.transform.gameObject.layer)
+            {
+                _isJumpMoving = false;
+
+                _playerDirection = EPlayerMoveDirections.None;
+            }
         }
     }
 

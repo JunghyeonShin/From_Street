@@ -37,7 +37,6 @@ public class CameraMoving : MonoBehaviour
     private readonly Vector3 _nextLeftPoint = new Vector3(-2f, 0f, 0f);
     private readonly Vector3 _nextRightPoint = new Vector3(2f, 0f, 0f);
 
-
     private void Start()
     {
         _cameraTransform = GetComponent<Transform>();
