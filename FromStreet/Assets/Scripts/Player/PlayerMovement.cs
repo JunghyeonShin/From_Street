@@ -22,9 +22,11 @@ public class PlayerMovement : MonoBehaviour
 
     private bool _isDie = false;
     private bool _isJumpMoving = false;
-    private bool _doJumpMoving = false;
 
-    private const float MAX_RAY_DISTANCE = 2f;
+    private const float MAX_RAY_DISTANCE = 20f;
+
+    private const int LAYER_NON_MOVABLE_AREA = 6;
+    private const int LAYER_TREE = 7;
 
     private readonly Vector3 _moveToForwardBetweenTwoPoints = new Vector3(0f, 1f, 1f);
     private readonly Vector3 _moveToBackBetweenTwoPoints = new Vector3(0f, 1f, -1f);
@@ -56,10 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
             CheckMovablePoint();
 
-            if (_doJumpMoving)
-            {
-                StartCoroutine(JumpMoving());
-            }
+            StartCoroutine(JumpMoving());
         }
 
         // юс╫ц
@@ -111,20 +110,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckMovablePoint()
     {
-        if (Physics.Raycast(_bezierEndPoint, _playerTransform.up, out _rayHit, MAX_RAY_DISTANCE))
-        {
-            if (6 == _rayHit.transform.gameObject.layer || 7 == _rayHit.transform.gameObject.layer)
-            {
-                _doJumpMoving = false;
+        Vector3 rayPosition = new Vector3(_bezierEndPoint.x, 12f, _bezierEndPoint.z);
 
+        if (Physics.Raycast(rayPosition, Vector3.down, out _rayHit, MAX_RAY_DISTANCE))
+        {
+            if (LAYER_NON_MOVABLE_AREA == _rayHit.transform.gameObject.layer || LAYER_TREE == _rayHit.transform.gameObject.layer)
+            {
                 _isJumpMoving = false;
 
                 _playerDirection = EPlayerMoveDirections.None;
             }
-        }
-        else
-        {
-            _doJumpMoving = true;
         }
     }
 

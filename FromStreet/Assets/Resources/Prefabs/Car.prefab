@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2178568022729822913}
   - component: {fileID: 2178568022730697127}
   - component: {fileID: 2178568022731727993}
-  - component: {fileID: 2178568022727636041}
   m_Layer: 0
   m_Name: polySurface10186
   m_TagString: Untagged
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2178568022727636041
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2178568022729495645}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.4706671, y: 1.5263916, z: 2.2192404}
-  m_Center: {x: 0, y: 1.0629425, z: 0}
 --- !u!1 &2178568022729499977
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,6 +252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2178568022729877805}
+  - component: {fileID: 8739031502584181068}
   - component: {fileID: 8832785685842184813}
   m_Layer: 0
   m_Name: Car
@@ -293,6 +280,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8739031502584181068
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2178568022729590409}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1.5263916, z: 3.6}
+  m_Center: {x: 0, y: 1.0629425, z: 0}
 --- !u!114 &8832785685842184813
 MonoBehaviour:
   m_ObjectHideFlags: 0
