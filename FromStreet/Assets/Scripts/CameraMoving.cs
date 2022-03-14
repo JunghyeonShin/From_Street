@@ -48,10 +48,7 @@ public class CameraMoving : MonoBehaviour
         }
 
         Move();
-    }
 
-    private void LateUpdate()
-    {
         if (false == _isChasingPlayer && ECameraChasingDirections.None == _cameraDirection)
         {
             _horizontalDistance = _player.transform.position.x - _cameraTransform.position.x;

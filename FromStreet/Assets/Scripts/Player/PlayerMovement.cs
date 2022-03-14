@@ -23,6 +23,12 @@ public class PlayerMovement : MonoBehaviour
     private bool _isDie = false;
     private bool _isJumpMoving = false;
 
+    private Transform _boatTransform = null;
+
+    private bool _isOnBoat = false;
+
+    private float _boatSpeed = 0f;
+
     private const float MAX_RAY_DISTANCE = 20f;
 
     private const int LAYER_NON_MOVABLE_AREA = 6;
@@ -54,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (LAYER_DEAD_LINE == other.gameObject.layer)
+        if (LAYER_CAR == other.gameObject.layer || LAYER_TRAIN == other.gameObject.layer || LAYER_DEAD_LINE == other.gameObject.layer)
         {
             _isDie = true;
 
@@ -66,13 +72,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (LAYER_CAR == collision.gameObject.layer || LAYER_TRAIN == collision.gameObject.layer)
+        if (LAYER_BOAT == collision.gameObject.layer)
         {
-            _isDie = true;
+            _isOnBoat = true;
 
-            GameManager.Instance.EndGame();
+            _boatTransform = collision.gameObject.GetComponent<Boat>().TransForm;
 
-            _playerTransform.gameObject.SetActive(false);
+            _boatSpeed = collision.gameObject.GetComponent<Boat>().MoveSpeed;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (LAYER_BOAT == collision.gameObject.layer)
+        {
+            _isOnBoat = false;
         }
     }
 
@@ -87,12 +101,21 @@ public class PlayerMovement : MonoBehaviour
             CheckMovablePoint();
 
             StartCoroutine(JumpMoving());
-        }     
+        }
+
+        if (_isOnBoat)
+        {
+            Vector3 takeBoatVec = _boatSpeed * Time.deltaTime * _boatTransform.forward;
+
+            _playerTransform.position += takeBoatVec;
+        }
 
         if (_isDie)
         {
             GameManager.Instance.EndGame();
         }
+
+        Debug.Log($"_playerTransform.position : {_playerTransform.position}");
     }
 
     private void CheckInputMessage()
