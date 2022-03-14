@@ -181,7 +181,6 @@ GameObject:
   - component: {fileID: 148400029}
   - component: {fileID: 148400028}
   - component: {fileID: 148400027}
-  - component: {fileID: 148400032}
   - component: {fileID: 148400031}
   m_Layer: 0
   m_Name: Dead Line
@@ -278,24 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654bcccea1013da4e91f5ee0f9185e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _randomTiles: {fileID: 1373787527}
+  _randomTiles: {fileID: 0}
   _moveSpeed: 0
---- !u!54 &148400032
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148400026}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
 --- !u!1 &207118494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,7 +1003,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1414911075
 RectTransform:
   m_ObjectHideFlags: 0
