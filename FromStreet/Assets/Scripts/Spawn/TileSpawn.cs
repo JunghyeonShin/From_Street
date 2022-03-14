@@ -29,7 +29,7 @@ public class TileInfomations
     public int PoolingObjectSize { get { return _objSize; } }
 }
 
-public class RandomTiles : MonoBehaviour
+public class TileSpawn : MonoBehaviour
 {
     [SerializeField] private List<TileInfomations> _tileInfos = null;
 
