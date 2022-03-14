@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private const int LAYER_BOAT = 8;
     private const int LAYER_CAR = 9;
     private const int LAYER_TRAIN = 10;
+    private const int LAYER_DEAD_LINE = 11;
 
     private readonly Vector3 _moveToForwardBetweenTwoPoints = new Vector3(0f, 1f, 1f);
     private readonly Vector3 _moveToBackBetweenTwoPoints = new Vector3(0f, 1f, -1f);
@@ -53,15 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (LAYER_CAR == collision.gameObject.layer)
-        {
-            _isDie = true;
-
-            GameManager.Instance.EndGame();
-
-            _playerTransform.gameObject.SetActive(false);
-        }
-        else if (LAYER_TRAIN == collision.gameObject.layer)
+        if (LAYER_CAR == collision.gameObject.layer || LAYER_TRAIN == collision.gameObject.layer || LAYER_DEAD_LINE == collision.gameObject.layer)
         {
             _isDie = true;
 

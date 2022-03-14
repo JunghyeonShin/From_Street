@@ -5,7 +5,6 @@ using UnityEngine;
 public class DeadLine : MonoBehaviour
 {
     [SerializeField] private RandomTiles _randomTiles = null;
-    [SerializeField] private float _moveSpeed = 0f;
 
     private const int LAYER_TILE = 3;
 
