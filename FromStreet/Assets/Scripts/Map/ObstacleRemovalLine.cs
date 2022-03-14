@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadLine : MonoBehaviour
+public class ObstacleRemovalLine : MonoBehaviour
 {
     [SerializeField] private RandomTiles _randomTiles = null;
 
