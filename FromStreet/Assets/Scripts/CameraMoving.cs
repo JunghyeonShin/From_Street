@@ -10,8 +10,6 @@ public class CameraMoving : MonoBehaviour
 
     [SerializeField] private float _reviseCameraPositionTime = 0f;
 
-    private enum ECameraChasingDirections { None, Forward, Left, Right, }
-
     private BezierCurve _bezierCurve = new BezierCurve();
 
     private Transform _cameraTransform = null;
