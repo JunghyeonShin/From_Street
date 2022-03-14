@@ -73,7 +73,7 @@ public class River : MonoBehaviour, IObjectPoolMessage
 
             _listPushedObstacles[i].transform.position = currPos;
 
-            _listPushedObstacles[i].gameObject.GetComponent<IMovableObstacleMessage>()?.SetMovableObstacleInfomations(randomSpeed, _listPushedObstacles[i].gameObject.transform);
+            _listPushedObstacles[i].gameObject.GetComponent<IMovableObstacleMessage>()?.SetMovableObstacleInfomations(randomSpeed, _spawnPosition, _listPushedObstacles[i].gameObject.transform);
         }
     }
 }

@@ -58,6 +58,6 @@ public class RailWay : MonoBehaviour, IObjectPoolMessage
 
         _pushedObstacle.transform.position = currPos;
 
-        _pushedObstacle.gameObject.GetComponent<IMovableObstacleMessage>()?.SetMovableObstacleInfomations(20f, _pushedObstacle.gameObject.transform);
+        _pushedObstacle.gameObject.GetComponent<IMovableObstacleMessage>()?.SetMovableObstacleInfomations(20f, _spawnPosition, _pushedObstacle.gameObject.transform);
     }
 }
