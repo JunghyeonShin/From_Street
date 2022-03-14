@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
 
     private const int LAYER_NON_MOVABLE_AREA = 6;
     private const int LAYER_TREE = 7;
+    private const int LAYER_BOAT = 8;
+    private const int LAYER_CAR = 9;
+    private const int LAYER_TRAIN = 10;
 
     private readonly Vector3 _moveToForwardBetweenTwoPoints = new Vector3(0f, 1f, 1f);
     private readonly Vector3 _moveToBackBetweenTwoPoints = new Vector3(0f, 1f, -1f);
@@ -48,6 +51,26 @@ public class PlayerMovement : MonoBehaviour
         _playerTransform = GetComponent<Transform>();
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (LAYER_CAR == collision.gameObject.layer)
+        {
+            _isDie = true;
+
+            GameManager.Instance.EndGame();
+
+            _playerTransform.gameObject.SetActive(false);
+        }
+        else if (LAYER_TRAIN == collision.gameObject.layer)
+        {
+            _isDie = true;
+
+            GameManager.Instance.EndGame();
+
+            _playerTransform.gameObject.SetActive(false);
+        }
+    }
+
     private void Update()
     {
         if (false == _isJumpMoving && EPlayerMoveDirections.None == _playerDirection)
@@ -59,16 +82,7 @@ public class PlayerMovement : MonoBehaviour
             CheckMovablePoint();
 
             StartCoroutine(JumpMoving());
-        }
-
-        // 임시
-        Debug.DrawRay(_bezierEndPoint, _playerTransform.up * MAX_RAY_DISTANCE, Color.red);
-
-        // 임시
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            _isDie = true;
-        }
+        }     
 
         if (_isDie)
         {

@@ -10,6 +10,8 @@ public class RestartButton : MonoBehaviour
 
     private bool _restartGame = false;
 
+    private const int RESTART = 0;
+
     private void Update()
     {
         if (GameManager.Instance.IsGameOver)
@@ -29,6 +31,6 @@ public class RestartButton : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(RESTART);
     }
 }
