@@ -52,9 +52,21 @@ public class PlayerMovement : MonoBehaviour
         _playerTransform = GetComponent<Transform>();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (LAYER_DEAD_LINE == other.gameObject.layer)
+        {
+            _isDie = true;
+
+            GameManager.Instance.EndGame();
+
+            _playerTransform.gameObject.SetActive(false);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (LAYER_CAR == collision.gameObject.layer || LAYER_TRAIN == collision.gameObject.layer || LAYER_DEAD_LINE == collision.gameObject.layer)
+        if (LAYER_CAR == collision.gameObject.layer || LAYER_TRAIN == collision.gameObject.layer)
         {
             _isDie = true;
 
