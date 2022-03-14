@@ -6,8 +6,6 @@ public class Car : MonoBehaviour, IMovableObstacleMessage
 {
     private Transform _transform = null;
 
-    private Vector3 _spawnPosition = Vector3.zero;
-
     private float _moveSpeed = 0f;
 
     private void Update()
@@ -16,31 +14,21 @@ public class Car : MonoBehaviour, IMovableObstacleMessage
 
         _transform.position += moveVec;
 
-        if (_spawnPosition.x > 0)
+        Vector3 adjustVec = new Vector3(50f, 0f, 0f);
+
+        if (_transform.position.x > 25f)
         {
-            if (_transform.position.x < -_spawnPosition.x)
-            {
-                _transform.position += _spawnPosition * 2;
-            }
+            _transform.position -= adjustVec;
         }
-        else if (_spawnPosition.x < 0)
+        else if (_transform.position.x < -25f)
         {
-            if (_transform.position.x > -_spawnPosition.x)
-            {
-                _transform.position += _spawnPosition * 2;
-            }
+            _transform.position += adjustVec;
         }
     }
 
     public void SetMovableObstacleInfomations(float moveSpeed, Vector3 spawnPosition, Transform transform)
     {
         _moveSpeed = moveSpeed;
-
-        _spawnPosition = spawnPosition;
-
-        Vector3 adjustVec = new Vector3(0f, _spawnPosition.y, 0f);
-
-        _spawnPosition -= adjustVec;
 
         _transform = transform;
     }

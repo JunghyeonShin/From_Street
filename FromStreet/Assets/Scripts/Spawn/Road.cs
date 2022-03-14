@@ -48,7 +48,7 @@ public class Road : MonoBehaviour, IObjectPoolMessage
 
     private void SetRoadObstacle(float posZ)
     {
-        float randomSpeed = Random.Range(2f, 4f);
+        float randomSpeed = Random.Range(2f, 6f);
 
         for (int i = 0; i < _poolingMaxRoadObstacleNum; ++i)
         {
