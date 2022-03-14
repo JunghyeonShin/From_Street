@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObstacleRemovalLine : MonoBehaviour
 {
-    [SerializeField] private RandomTiles _randomTiles = null;
+    [SerializeField] private TileSpawn _randomTiles = null;
 
     private const int LAYER_TILE = 3;
 
