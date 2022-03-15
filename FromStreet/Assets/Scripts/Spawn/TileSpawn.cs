@@ -29,11 +29,25 @@ public class TileInfomations
     public int PoolingObjectSize { get { return _objSize; } }
 }
 
+[Serializable]
+public class SampleTileInfomations
+{
+    [SerializeField] private ETileTypes _sampleTileType = ETileTypes.Pavement;
+
+    [SerializeField] private int _sampleTileCount = 0;
+
+    public ETileTypes SampleTileType { get { return _sampleTileType; } }
+
+    public int SampleTileCount { get { return _sampleTileCount; } }
+}
+
 public class TileSpawn : MonoBehaviour
 {
     [SerializeField] private List<TileInfomations> _tileInfos = null;
 
     [SerializeField] private int _initTileNumber = 0;
+
+    [SerializeField] private List<SampleTileInfomations> _sampleTileInfos = null;
 
     private Dictionary<ETileTypes, ObjectPool> _tileDictionaries = new Dictionary<ETileTypes, ObjectPool>();
 
@@ -84,6 +98,14 @@ public class TileSpawn : MonoBehaviour
         for (int i = 0; i < ConstantValue.READY_TILE_NUMBER; ++i)
         {
             PushTile(ETileTypes.Pavement);
+        }
+
+        for (int i = 0; i < _sampleTileInfos.Count; ++i)
+        {
+            for (int j = 0; j < _sampleTileInfos[i].SampleTileCount; ++j)
+            {
+                PushTile(_sampleTileInfos[i].SampleTileType);
+            }
         }
 
         while (_createdTiles.Count <= _initTileNumber)
