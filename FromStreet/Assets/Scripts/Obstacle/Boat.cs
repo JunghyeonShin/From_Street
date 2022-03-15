@@ -8,6 +8,10 @@ public class Boat : MonoBehaviour, IMovableObstacleMessage
 
     private float _moveSpeed = 0f;
 
+    public Transform TransForm { get { return _transform; } }
+
+    public float MoveSpeed { get { return _moveSpeed; } }
+
     private void Update()
     {
         Vector3 moveVec = _moveSpeed * Time.deltaTime * _transform.forward;

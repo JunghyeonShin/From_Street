@@ -48,7 +48,7 @@ public class River : MonoBehaviour, IObjectPoolMessage
 
     private void SetRiverObstacle(float posZ)
     {
-        float randomSpeed = Random.Range(2f, 4f);
+        float randomSpeed = Random.Range(4f, 9f);
 
         for (int i = 0; i < _poolingMaxRiverObstacleNum; ++i)
         {

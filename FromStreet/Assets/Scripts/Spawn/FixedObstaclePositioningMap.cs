@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class FixedObjectPositioningMap
+public class FixedObstaclePositioningMap
 {
     private int _lastPositioningIndex = 0;
     private int _creatablePosition = 0;
@@ -17,9 +17,15 @@ public class FixedObjectPositioningMap
     {
         _randomNumber = UnityEngine.Random.Range(0, ConstantValue.CREATABLE_BIT_NUMBER);
 
+        GameObject _remeberObject = GameObject.Find(ConstantValue.TILE_MAP);
+
+        _lastPositioningIndex = _remeberObject.gameObject.GetComponent<RememberFixedObstaclePosition>().RememberPosition;
+
         CreateRandomNumber(_randomNumber);
 
         CreateRandomPosition(_randomNumber, _lastPositioningIndex);
+
+        Debug.Log($"_randomNumber : {_randomNumber}\n_lastPositioningIndex : {_lastPositioningIndex}");
     }
 
     private void CreateRandomNumber(int num)

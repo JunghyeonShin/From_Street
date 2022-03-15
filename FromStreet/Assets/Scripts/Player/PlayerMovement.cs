@@ -23,6 +23,14 @@ public class PlayerMovement : MonoBehaviour
     private bool _isDie = false;
     private bool _isJumpMoving = false;
 
+    private Transform _boatTransform = null;
+
+    private bool _isOnBoat = false;
+
+    private float _adjustForwardMiddlePosX = 0f;
+    private float _adjustBackMiddlePosX = 0f;
+    private float _boatSpeed = 0f;
+
     private const float MAX_RAY_DISTANCE = 20f;
 
     private const int LAYER_NON_MOVABLE_AREA = 6;
@@ -32,8 +40,6 @@ public class PlayerMovement : MonoBehaviour
     private const int LAYER_TRAIN = 10;
     private const int LAYER_DEAD_LINE = 11;
 
-    private readonly Vector3 _moveToForwardBetweenTwoPoints = new Vector3(0f, 1f, 1f);
-    private readonly Vector3 _moveToBackBetweenTwoPoints = new Vector3(0f, 1f, -1f);
     private readonly Vector3 _moveToLeftBetweenTwoPoints = new Vector3(-1f, 1f, 0f);
     private readonly Vector3 _moveToRightBetweenTwoPoints = new Vector3(1f, 1f, 0f);
 
@@ -54,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (LAYER_DEAD_LINE == other.gameObject.layer)
+        if (LAYER_NON_MOVABLE_AREA == other.gameObject.layer || LAYER_CAR == other.gameObject.layer || LAYER_TRAIN == other.gameObject.layer || LAYER_DEAD_LINE == other.gameObject.layer)
         {
             _isDie = true;
 
@@ -66,13 +72,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (LAYER_CAR == collision.gameObject.layer || LAYER_TRAIN == collision.gameObject.layer)
+        if (LAYER_BOAT == collision.gameObject.layer)
         {
-            _isDie = true;
+            _isOnBoat = true;
 
-            GameManager.Instance.EndGame();
+            _boatTransform = collision.gameObject.GetComponent<Boat>().TransForm;
 
-            _playerTransform.gameObject.SetActive(false);
+            _boatSpeed = collision.gameObject.GetComponent<Boat>().MoveSpeed;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (LAYER_BOAT == collision.gameObject.layer)
+        {
+            _isOnBoat = false;
         }
     }
 
@@ -87,7 +101,14 @@ public class PlayerMovement : MonoBehaviour
             CheckMovablePoint();
 
             StartCoroutine(JumpMoving());
-        }     
+        }
+
+        if (_isOnBoat)
+        {
+            Vector3 takeBoatVec = _boatSpeed * Time.deltaTime * _boatTransform.forward;
+
+            _playerTransform.position += takeBoatVec;
+        }
 
         if (_isDie)
         {
@@ -146,23 +167,77 @@ public class PlayerMovement : MonoBehaviour
     {
         _bezierStartPoint = _playerTransform.position;
 
+        float adjustPlayerPosX = _playerTransform.position.x;
+
+        if (adjustPlayerPosX < -7)
+        {
+            adjustPlayerPosX = -8;
+        }
+        else if (-7 <= adjustPlayerPosX && adjustPlayerPosX < -5)
+        {
+            adjustPlayerPosX = -6;
+        }
+        else if (-5 <= adjustPlayerPosX && adjustPlayerPosX < -3)
+        {
+            adjustPlayerPosX = -4;
+        }
+        else if (-3 <= adjustPlayerPosX && adjustPlayerPosX < -3)
+        {
+            adjustPlayerPosX = -2;
+        }
+        else if (-1 <= adjustPlayerPosX && adjustPlayerPosX < 1)
+        {
+            adjustPlayerPosX = 0;
+        }
+        else if (1 <= adjustPlayerPosX && adjustPlayerPosX < 3)
+        {
+            adjustPlayerPosX = 2;
+        }
+        else if (3 <= adjustPlayerPosX && adjustPlayerPosX < 5)
+        {
+            adjustPlayerPosX = 4;
+        }
+        else if (5 <= adjustPlayerPosX && adjustPlayerPosX < 7)
+        {
+            adjustPlayerPosX = 6;
+        }
+        else if (7 <= adjustPlayerPosX)
+        {
+            adjustPlayerPosX = 8;
+        }
+
+        Vector3 _adjustPlayerPos = new Vector3(adjustPlayerPosX, _playerTransform.position.y, _playerTransform.position.z);
+
+
         switch (_playerDirection)
         {
             case EPlayerMoveDirections.Forward:
-                _bezierTempPoint = _playerTransform.position + _moveToForwardBetweenTwoPoints;
-                _bezierEndPoint = _playerTransform.position + _nextForwardPoint;
+                _bezierEndPoint = _adjustPlayerPos + _nextForwardPoint;
+
+                _adjustForwardMiddlePosX = (_adjustPlayerPos.x - _bezierEndPoint.x) / 2;
+
+                Vector3 moveToForwardBetweenTwoPoints = new Vector3(_adjustForwardMiddlePosX, 1f, 1f);
+
+                _bezierTempPoint = _adjustPlayerPos + moveToForwardBetweenTwoPoints;
                 break;
             case EPlayerMoveDirections.Back:
-                _bezierTempPoint = _playerTransform.position + _moveToBackBetweenTwoPoints;
-                _bezierEndPoint = _playerTransform.position + _nextBackPoint;
+                _bezierEndPoint = _adjustPlayerPos + _nextBackPoint;
+
+                _adjustBackMiddlePosX = (_adjustPlayerPos.x - _bezierEndPoint.x) / 2;
+
+                Vector3 moveToBackBetweenTwoPoints = new Vector3(_adjustBackMiddlePosX, 1f, -1f);
+
+                _bezierTempPoint = _adjustPlayerPos + moveToBackBetweenTwoPoints;
                 break;
             case EPlayerMoveDirections.Left:
-                _bezierTempPoint = _playerTransform.position + _moveToLeftBetweenTwoPoints;
-                _bezierEndPoint = _playerTransform.position + _nextLeftPoint;
+                _bezierTempPoint = _adjustPlayerPos + _moveToLeftBetweenTwoPoints;
+
+                _bezierEndPoint = _adjustPlayerPos + _nextLeftPoint;
                 break;
             case EPlayerMoveDirections.Right:
-                _bezierTempPoint = _playerTransform.position + _moveToRightBetweenTwoPoints;
-                _bezierEndPoint = _playerTransform.position + _nextRightPoint;
+                _bezierTempPoint = _adjustPlayerPos + _moveToRightBetweenTwoPoints;
+
+                _bezierEndPoint = _adjustPlayerPos + _nextRightPoint;
                 break;
             default:
                 break;

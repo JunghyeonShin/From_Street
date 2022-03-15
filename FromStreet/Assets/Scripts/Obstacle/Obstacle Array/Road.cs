@@ -48,14 +48,13 @@ public class Road : MonoBehaviour, IObjectPoolMessage
 
     private void SetRoadObstacle(float posZ)
     {
-        float randomSpeed = Random.Range(2f, 6f);
+        float randomSpeed = Random.Range(4f, 9f);
 
         for (int i = 0; i < _poolingMaxRoadObstacleNum; ++i)
         {
             _listPushedObstacles.Add(_obstacleSpawn.GiveObstacle(EObstacleTypes.Car));
 
             float randomNum = Random.Range(_intervals[ConstantValue.MIN_INTERVAL_NUM], _intervals[ConstantValue.MAX_INTERVAL_NUM]);
-
 
             if (_spawnPosition.x >= 0)
             {
