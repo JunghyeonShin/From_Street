@@ -10,7 +10,7 @@ public class RestartButton : MonoBehaviour
 
     private bool _restartGame = false;
 
-    private const int RESTART = 0;
+    private const int GAME_SCENE = 0;
 
     private void Update()
     {
@@ -31,6 +31,6 @@ public class RestartButton : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(RESTART);
+        SceneManager.LoadScene(GAME_SCENE);
     }
 }

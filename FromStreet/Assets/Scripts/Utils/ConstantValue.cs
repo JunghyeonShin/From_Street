@@ -23,4 +23,5 @@ public class ConstantValue
     public const int MAX_INTERVAL_NUM = 1;
 
     public const string OBSTACLE_SPAWN_MANAGER = "Obstacle Spawn Manager";
+    public const string TILE_MAP = "TileMap";
 }

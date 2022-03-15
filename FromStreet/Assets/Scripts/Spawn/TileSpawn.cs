@@ -29,15 +29,27 @@ public class TileInfomations
     public int PoolingObjectSize { get { return _objSize; } }
 }
 
+[Serializable]
+public class SampleTileInfomations
+{
+    [SerializeField] private ETileTypes _sampleTileType = ETileTypes.Pavement;
+
+    [SerializeField] private int _sampleTileCount = 0;
+
+    public ETileTypes SampleTileType { get { return _sampleTileType; } }
+
+    public int SampleTileCount { get { return _sampleTileCount; } }
+}
+
 public class TileSpawn : MonoBehaviour
 {
     [SerializeField] private List<TileInfomations> _tileInfos = null;
 
     [SerializeField] private int _initTileNumber = 0;
 
-    private Dictionary<ETileTypes, ObjectPool> _tileDictionaries = new Dictionary<ETileTypes, ObjectPool>();
+    [SerializeField] private List<SampleTileInfomations> _sampleTileInfos = null;
 
-    private Queue<GameObject> _createdTiles = new Queue<GameObject>();
+    private Dictionary<ETileTypes, ObjectPool> _tileDictionaries = new Dictionary<ETileTypes, ObjectPool>();
 
     private Queue<ETileTypes> _listTileType = new Queue<ETileTypes>();
 
@@ -46,6 +58,7 @@ public class TileSpawn : MonoBehaviour
 
     private float _currPosZ = 6f;
 
+    private int _createdTiles = 0;
 
     public ETileTypes CreateNextTileType { get { return _createNextTileType; } }
 
@@ -65,7 +78,7 @@ public class TileSpawn : MonoBehaviour
 
     public void ReturnTile(ETileTypes type, GameObject obj)
     {
-        _createdTiles.Dequeue();
+        --_createdTiles;
 
         _tileDictionaries[type].ReturnObject(obj);
 
@@ -86,7 +99,15 @@ public class TileSpawn : MonoBehaviour
             PushTile(ETileTypes.Pavement);
         }
 
-        while (_createdTiles.Count <= _initTileNumber)
+        for (int i = 0; i < _sampleTileInfos.Count; ++i)
+        {
+            for (int j = 0; j < _sampleTileInfos[i].SampleTileCount; ++j)
+            {
+                PushTile(_sampleTileInfos[i].SampleTileType);
+            }
+        }
+
+        while (_createdTiles <= _initTileNumber)
         {
             ListUpTileType();
 
@@ -126,7 +147,7 @@ public class TileSpawn : MonoBehaviour
 
         obj.transform.position = currPos;
 
-        _createdTiles.Enqueue(obj);
+        ++_createdTiles;
 
         _currPosZ += ConstantValue.TILE_SIZE;
     }
