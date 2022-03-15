@@ -6,13 +6,17 @@ public class Pavement : MonoBehaviour, IObjectPoolMessage
 {
     private List<GameObject> _listPushedObstacles = new List<GameObject>();
 
-    private FixedObjectPositioningMap _fixedObjectPositioningMap = new FixedObjectPositioningMap();
+    private FixedObstaclePositioningMap _fixedObjectPositioningMap = new FixedObstaclePositioningMap();
 
     private ObstacleSpawn _obstacleSpawn = null;
 
     public void OnPulled(float posZ)
     {
         _fixedObjectPositioningMap.CreateFixedObstaclePosition();
+
+        GameObject _remeberObject = GameObject.Find(ConstantValue.TILE_MAP);
+
+        _remeberObject.gameObject.GetComponent<IRememberFixedObatclePosition>()?.RememberPoint(_fixedObjectPositioningMap.CreatablePosition);
 
         GameObject spawnManager = GameObject.Find(ConstantValue.OBSTACLE_SPAWN_MANAGER);
 
