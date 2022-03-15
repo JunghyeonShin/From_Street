@@ -51,8 +51,6 @@ public class TileSpawn : MonoBehaviour
 
     private Dictionary<ETileTypes, ObjectPool> _tileDictionaries = new Dictionary<ETileTypes, ObjectPool>();
 
-    private Queue<GameObject> _createdTiles = new Queue<GameObject>();
-
     private Queue<ETileTypes> _listTileType = new Queue<ETileTypes>();
 
     private ETileTypes _createNextTileType = ETileTypes.Pavement;
@@ -60,6 +58,7 @@ public class TileSpawn : MonoBehaviour
 
     private float _currPosZ = 6f;
 
+    private int _createdTiles = 0;
 
     public ETileTypes CreateNextTileType { get { return _createNextTileType; } }
 
@@ -79,7 +78,7 @@ public class TileSpawn : MonoBehaviour
 
     public void ReturnTile(ETileTypes type, GameObject obj)
     {
-        _createdTiles.Dequeue();
+        --_createdTiles;
 
         _tileDictionaries[type].ReturnObject(obj);
 
@@ -108,7 +107,7 @@ public class TileSpawn : MonoBehaviour
             }
         }
 
-        while (_createdTiles.Count <= _initTileNumber)
+        while (_createdTiles <= _initTileNumber)
         {
             ListUpTileType();
 
@@ -148,7 +147,7 @@ public class TileSpawn : MonoBehaviour
 
         obj.transform.position = currPos;
 
-        _createdTiles.Enqueue(obj);
+        ++_createdTiles;
 
         _currPosZ += ConstantValue.TILE_SIZE;
     }
