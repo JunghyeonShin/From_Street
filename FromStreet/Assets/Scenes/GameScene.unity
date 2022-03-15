@@ -210,7 +210,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148400026}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1057,7 +1057,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1309739819}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15, y: 0, z: 0}
+  m_LocalPosition: {x: 15, y: 0, z: 10}
   m_LocalScale: {x: 10, y: 5, z: 30}
   m_Children: []
   m_Father: {fileID: 148082214}
@@ -1135,6 +1135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1373787526}
   - component: {fileID: 1373787527}
+  - component: {fileID: 1373787528}
   m_Layer: 0
   m_Name: TileMap
   m_TagString: Untagged
@@ -1194,9 +1195,19 @@ MonoBehaviour:
     _maxValue: 3
     _objSize: 20
   _initTileNumber: 10
-  _sampleTileInfos:
-  - _sampleTileType: 0
-    _sampleTileCount: 20
+  _sampleTileInfos: []
+--- !u!114 &1373787528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373787525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aae0074d3a814f4ba89eb39a46d72aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1414911074
 GameObject:
   m_ObjectHideFlags: 0
@@ -1210,7 +1221,7 @@ GameObject:
   - component: {fileID: 1414911077}
   - component: {fileID: 1414911076}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Restart Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1357,7 +1368,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1564030982}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: -15, y: 0, z: 10}
   m_LocalScale: {x: 10, y: 5, z: 30}
   m_Children: []
   m_Father: {fileID: 148082214}
