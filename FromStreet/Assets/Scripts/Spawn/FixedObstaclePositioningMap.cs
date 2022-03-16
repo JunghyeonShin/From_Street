@@ -24,8 +24,6 @@ public class FixedObstaclePositioningMap
         CreateRandomNumber(_randomNumber);
 
         CreateRandomPosition(_randomNumber, _lastPositioningIndex);
-
-        Debug.Log($"_randomNumber : {_randomNumber}\n_lastPositioningIndex : {_lastPositioningIndex}");
     }
 
     private void CreateRandomNumber(int num)
