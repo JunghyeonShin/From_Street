@@ -31,7 +31,7 @@ public class FixedObstaclePositioningMap
         int count = 0;
         int temp = 1;
 
-        for(int i = 0; i < ConstantValue.MAX_FIXED_OBSTACLE_POSITION_INDEX; ++i)
+        for (int i = 0; i < ConstantValue.MAX_FIXED_OBSTACLE_POSITION_INDEX; ++i)
         {
             if (0 != (num & temp))
             {
@@ -52,17 +52,23 @@ public class FixedObstaclePositioningMap
 
     private void CreateRandomPosition(int lhs, int rhs)
     {
+        int count = 0;
         int temp = 1;
 
         for (int i = 0; i < ConstantValue.MAX_FIXED_OBSTACLE_POSITION_INDEX; ++i)
         {
             if (0 == ((lhs & temp) | (rhs & temp)))
             {
-                _lastPositioningIndex = lhs | rhs;
+                ++count;
 
-                _creatablePosition = lhs;
+                if (2 == count)
+                {
+                    _lastPositioningIndex = lhs | rhs;
 
-                return;
+                    _creatablePosition = lhs;
+
+                    return;
+                }
             }
 
             temp <<= 1;
