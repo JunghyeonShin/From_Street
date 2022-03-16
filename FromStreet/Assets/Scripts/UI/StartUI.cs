@@ -11,7 +11,7 @@ public class StartUI : MonoBehaviour
 
     [SerializeField] private Text _startText = null;
 
-    private const string START_TEXT = "Press W to Start";
+    private const string START_TEXT = "Touch to Start";
 
     void Update()
     {

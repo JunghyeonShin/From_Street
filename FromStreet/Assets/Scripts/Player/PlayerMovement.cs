@@ -14,9 +14,9 @@ public class PlayerMovement : MonoBehaviour
 
     private RaycastHit _rayHit;
 
-    private Vector3 _bezierStartPoint = new Vector3();
-    private Vector3 _bezierTempPoint = new Vector3();
-    private Vector3 _bezierEndPoint = new Vector3();
+    private Vector3 _bezierStartPoint = Vector3.zero;
+    private Vector3 _bezierTempPoint = Vector3.zero;
+    private Vector3 _bezierEndPoint = Vector3.zero;
 
     private EPlayerMoveDirections _playerDirection = EPlayerMoveDirections.None;
 
