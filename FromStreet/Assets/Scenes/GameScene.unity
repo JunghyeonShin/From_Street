@@ -686,7 +686,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press W to Start
+  m_Text: Touch to Start
 --- !u!222 &591094429
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1195,7 +1195,9 @@ MonoBehaviour:
     _maxValue: 3
     _objSize: 20
   _initTileNumber: 10
-  _sampleTileInfos: []
+  _sampleTileInfos:
+  - _sampleTileType: 0
+    _sampleTileCount: 30
 --- !u!114 &1373787528
 MonoBehaviour:
   m_ObjectHideFlags: 0
