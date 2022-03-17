@@ -648,10 +648,10 @@ RectTransform:
   m_Father: {fileID: 402534095}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 315, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &591094428
 MonoBehaviour:
@@ -1028,7 +1028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 2036976239}
-  _moveSpeed: 1
+  _moveSpeed: 0
   _reviseCameraPositionTime: 0.15
 --- !u!1 &1309739819
 GameObject:
@@ -1195,9 +1195,7 @@ MonoBehaviour:
     _maxValue: 3
     _objSize: 20
   _initTileNumber: 10
-  _sampleTileInfos:
-  - _sampleTileType: 0
-    _sampleTileCount: 30
+  _sampleTileInfos: []
 --- !u!114 &1373787528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1619,7 +1617,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671635451}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

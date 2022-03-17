@@ -6,11 +6,14 @@ public class PlayerInput : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _playerMovement = null;
 
+    private Vector2[] _touchedPositions = new Vector2[3];
+
+    private float[] _dotVectors = new float[2];
+
     private Touch _touch;
 
-    private Vector3[] _touchedPos = new Vector3[2];
+    private bool _isTouch = false;
 
-    private const string INITIALIZE_TOUCH = "InitializeTouch";
     public bool MoveForward { get; private set; }
     public bool MoveBack { get; private set; }
     public bool MoveLeft { get; private set; }
@@ -24,6 +27,15 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
+        if (_isTouch)
+        {
+            _touchedPositions[0] = Vector2.zero;
+            _touchedPositions[1] = Vector2.zero;
+            _touchedPositions[2] = Vector2.zero;
+        }
+
+        _isTouch = false;
+
         MoveForward = Input.GetKeyDown(KeyCode.W);
         MoveBack = Input.GetKeyDown(KeyCode.S);
         MoveLeft = Input.GetKeyDown(KeyCode.A);
@@ -35,48 +47,47 @@ public class PlayerInput : MonoBehaviour
 
             if (TouchPhase.Began == _touch.phase)
             {
-                _touchedPos[0] = Camera.main.ScreenToWorldPoint(_touch.position);
+                _touchedPositions[0] = Camera.main.ScreenToWorldPoint(_touch.position);
             }
-            if (TouchPhase.Ended == _touch.phase)
+            else if (TouchPhase.Ended == _touch.phase)
             {
-                _touchedPos[1] = Camera.main.ScreenToWorldPoint(_touch.position);
-            }
+                _touchedPositions[1] = Camera.main.ScreenToWorldPoint(_touch.position);
 
-            float _distanceY = _touchedPos[1].y - _touchedPos[0].y;
-            float _distanceX = _touchedPos[1].x - _touchedPos[0].x;
+                _touchedPositions[2] = _touchedPositions[1] - _touchedPositions[0];
 
-            if (_distanceX <= 5f)
-            {
-                if (_distanceY >= 0f)
-                {
-                    MoveForward = true;
-                }
-                else
-                {
-                    MoveBack = true;
-                }
+                _dotVectors[0] = Vector2.Dot(_touchedPositions[2].normalized, Vector2.up);
+                _dotVectors[1] = Vector2.Dot(_touchedPositions[2].normalized, Vector2.right);
+
+                _isTouch = true;
             }
-            else
-            {
-                if (_distanceY >= 0f)
-                {
-                    MoveRight = true;
-                }
-                else
-                {
-                    MoveLeft = true;
-                }
-            }
-            
-            Invoke(INITIALIZE_TOUCH, 10f);
         }
-    }
 
-    private void InitializeTouch()
-    {
-        MoveForward = false;
-        MoveBack = false;
-        MoveLeft = false;
-        MoveRight = false;
+        if (_isTouch)
+        {
+            if (_dotVectors[0] >= 0.7)
+            {
+                MoveForward = true;
+            }
+            else if (_dotVectors[0] <= -0.7)
+            {
+                MoveBack = true;
+            }
+            else if (_dotVectors[1] < 0.7)
+            {
+                MoveLeft = true;
+            }
+            else if (_dotVectors[1] > 0.7)
+            {
+                MoveRight = true;
+            }
+
+            if (0.1f >= _touchedPositions[2].magnitude)
+            {
+                MoveForward = true;
+                MoveBack = false;
+                MoveLeft = false;
+                MoveRight = false;
+            }
+        }
     }
 }
