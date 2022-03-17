@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
-        if (false == _isGameStart && Input.GetKeyDown(KeyCode.W))
+        if (false == _isGameStart && (Input.GetKeyDown(KeyCode.W) || Input.touchCount > 0))
         {
             _isGameStart = true;
 
