@@ -52,6 +52,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool PlayerDie { get { return _isDie; } }
 
+    public bool PlayerJumpMoving { get { return _isJumpMoving; } }
+
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();

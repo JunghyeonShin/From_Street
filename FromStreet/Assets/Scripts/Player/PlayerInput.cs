@@ -22,7 +22,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.IsGameOver || _playerMovement.PlayerDie)
+        if (GameManager.Instance.IsGameOver || _playerMovement.PlayerDie || _playerMovement.PlayerJumpMoving)
         {
             return;
         }
@@ -59,6 +59,8 @@ public class PlayerInput : MonoBehaviour
                 _dotVectors[1] = Vector2.Dot(_touchedPositions[2].normalized, Vector2.right);
 
                 _isTouch = true;
+
+                Debug.Log($"_touchedPositions[2].magnitude : {_touchedPositions[2].magnitude}");
             }
         }
 
@@ -81,7 +83,7 @@ public class PlayerInput : MonoBehaviour
                 MoveRight = true;
             }
 
-            if (0.1f >= _touchedPositions[2].magnitude)
+            if (_touchedPositions[2].magnitude <= 0.15f)
             {
                 MoveForward = true;
                 MoveBack = false;
