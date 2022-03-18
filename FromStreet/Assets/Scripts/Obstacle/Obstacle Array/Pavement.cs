@@ -16,7 +16,7 @@ public class Pavement : MonoBehaviour, IObjectPoolMessage
 
         GameObject _remeberObject = GameObject.Find(ConstantValue.TILE_MAP);
 
-        _remeberObject.gameObject.GetComponent<IRememberFixedObatclePosition>()?.RememberPoint(_fixedObjectPositioningMap.CreatablePosition);
+        _remeberObject.gameObject.GetComponent<IRememberFixedObatclePosition>()?.RememberPoint(_fixedObjectPositioningMap.LastPosition);
 
         GameObject spawnManager = GameObject.Find(ConstantValue.OBSTACLE_SPAWN_MANAGER);
 
