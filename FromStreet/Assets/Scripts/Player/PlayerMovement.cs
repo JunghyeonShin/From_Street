@@ -210,7 +210,6 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 _adjustPlayerPos = new Vector3(adjustPlayerPosX, _playerTransform.position.y, _playerTransform.position.z);
 
-
         switch (_playerDirection)
         {
             case EPlayerMoveDirections.Forward:

@@ -10,15 +10,14 @@ public class PlayerInput : MonoBehaviour
 
     private float[] _dotVectors = new float[2];
 
-    private Touch _touch;
-
     private bool _isTouch = false;
+
+    private const float DOT_45_DEGREE = 0.7071068f;
 
     public bool MoveForward { get; private set; }
     public bool MoveBack { get; private set; }
     public bool MoveLeft { get; private set; }
     public bool MoveRight { get; private set; }
-
 
     private void Update()
     {
@@ -41,49 +40,59 @@ public class PlayerInput : MonoBehaviour
         MoveLeft = Input.GetKeyDown(KeyCode.A);
         MoveRight = Input.GetKeyDown(KeyCode.D);
 
+        Touch _touch;
+
         if (Input.touchCount > 0)
         {
             _touch = Input.GetTouch(0);
 
             if (TouchPhase.Began == _touch.phase)
             {
-                _touchedPositions[0] = Camera.main.ScreenToWorldPoint(_touch.position);
+                _touchedPositions[0] = _touch.position;
             }
             else if (TouchPhase.Ended == _touch.phase)
             {
-                _touchedPositions[1] = Camera.main.ScreenToWorldPoint(_touch.position);
+                if (Vector2.zero == _touchedPositions[0])
+                {
+                    _touchedPositions[1] = Vector2.zero;
+                    _touchedPositions[2] = Vector2.zero;
 
-                _touchedPositions[2] = _touchedPositions[1] - _touchedPositions[0];
+                    _isTouch = true;
+                }
+                else
+                {
+                    _touchedPositions[1] = _touch.position;
 
-                _dotVectors[0] = Vector2.Dot(_touchedPositions[2].normalized, Vector2.up);
-                _dotVectors[1] = Vector2.Dot(_touchedPositions[2].normalized, Vector2.right);
+                    _touchedPositions[2] = _touchedPositions[1] - _touchedPositions[0];
 
-                _isTouch = true;
+                    _dotVectors[0] = Vector2.Dot(_touchedPositions[2].normalized, Vector2.up);
+                    _dotVectors[1] = Vector2.Dot(_touchedPositions[2].normalized, Vector2.right);
 
-                Debug.Log($"_touchedPositions[2].magnitude : {_touchedPositions[2].magnitude}");
+                    _isTouch = true;
+                }
             }
         }
 
         if (_isTouch)
         {
-            if (_dotVectors[0] >= 0.7)
+            if (_dotVectors[0] >= DOT_45_DEGREE)
             {
                 MoveForward = true;
             }
-            else if (_dotVectors[0] <= -0.7)
+            else if (_dotVectors[0] <= -DOT_45_DEGREE)
             {
                 MoveBack = true;
             }
-            else if (_dotVectors[1] < 0.7)
+            else if (_dotVectors[1] < 0f)
             {
                 MoveLeft = true;
             }
-            else if (_dotVectors[1] > 0.7)
+            else if (_dotVectors[1] > 0f)
             {
                 MoveRight = true;
             }
 
-            if (_touchedPositions[2].magnitude <= 0.15f)
+            if (_touchedPositions[2].magnitude <= Screen.height * 0.05f)
             {
                 MoveForward = true;
                 MoveBack = false;
