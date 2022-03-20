@@ -183,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
         {
             adjustPlayerPosX = -4;
         }
-        else if (-3 <= adjustPlayerPosX && adjustPlayerPosX < -3)
+        else if (-3 <= adjustPlayerPosX && adjustPlayerPosX < -1)
         {
             adjustPlayerPosX = -2;
         }

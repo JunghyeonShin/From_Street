@@ -12,7 +12,7 @@ public class PlayerInput : MonoBehaviour
 
     private bool _isTouch = false;
 
-    private const float DOT_45_DEGREE = 0.7071068f;
+    private const float DOT_DEGREE_45 = 0.7071068f;
 
     public bool MoveForward { get; private set; }
     public bool MoveBack { get; private set; }
@@ -75,11 +75,11 @@ public class PlayerInput : MonoBehaviour
 
         if (_isTouch)
         {
-            if (_dotVectors[0] >= DOT_45_DEGREE)
+            if (_dotVectors[0] >= DOT_DEGREE_45)
             {
                 MoveForward = true;
             }
-            else if (_dotVectors[0] <= -DOT_45_DEGREE)
+            else if (_dotVectors[0] <= -DOT_DEGREE_45)
             {
                 MoveBack = true;
             }
