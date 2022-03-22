@@ -52,6 +52,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool PlayerDie { get { return _isDie; } }
 
+    public bool PlayerJumpMoving { get { return _isJumpMoving; } }
+
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
@@ -181,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
         {
             adjustPlayerPosX = -4;
         }
-        else if (-3 <= adjustPlayerPosX && adjustPlayerPosX < -3)
+        else if (-3 <= adjustPlayerPosX && adjustPlayerPosX < -1)
         {
             adjustPlayerPosX = -2;
         }
@@ -207,7 +209,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Vector3 _adjustPlayerPos = new Vector3(adjustPlayerPosX, _playerTransform.position.y, _playerTransform.position.z);
-
 
         switch (_playerDirection)
         {

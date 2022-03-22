@@ -21,20 +21,24 @@ public class ScoreUI : MonoBehaviour
     {
         if (GameManager.Instance.IsGameOver)
         {
-            if (0 != _currScore)
-            {
-                UpdateCurrentBestScoreText();
+            UpdateCurrentBestScoreText();
 
-                GameManager.Instance.EndGame();
-            }
+            GameManager.Instance.EndGame();
         }
         else
         {
+            _bestScoreObject.SetActive(false);
+
             if (EPlayerMoveDirections.None == _player.gameObject.GetComponent<PlayerMovement>().PlayerMoveDirection)
             {
                 int compareScore = _currScore;
 
                 _currScore = (int)(_player.transform.position.z - 3) / 2;
+
+                if (_currScore <= 0)
+                {
+                    _currScore = 0;
+                }
 
                 UpdateCurrentScoreText(compareScore);
             }
@@ -53,15 +57,15 @@ public class ScoreUI : MonoBehaviour
     {
         _bestScoreObject.SetActive(true);
 
-        int currBestScore = PlayerPrefs.GetInt(BEST_SCORE);
+        int bestScore = PlayerPrefs.GetInt(BEST_SCORE);
 
-        if (currBestScore < _currScore)
+        if (bestScore < _currScore)
         {
-            currBestScore = _currScore;
+            bestScore = _currScore;
 
-            PlayerPrefs.SetInt(BEST_SCORE, currBestScore);
+            PlayerPrefs.SetInt(BEST_SCORE, bestScore);
         }
 
-        _bestScoreText.text = $"{currBestScore}";
+        _bestScoreText.text = $"{bestScore}";
     }
 }

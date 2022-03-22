@@ -7,11 +7,16 @@ using UnityEngine;
 
 public class FixedObstaclePositioningMap
 {
-    private int _lastPositioningIndex = 0;
     private int _creatablePosition = 0;
+    private int _lastPositioningIndex = 0;
     private int _randomNumber = 0;
 
+    private const int MOVABLE_ROAD = 0;
+    private const int TOTAL_EMPTY_PLACE = 2;
+
     public int CreatablePosition { get { return _creatablePosition; } }
+
+    public int LastPosition { get { return _lastPositioningIndex; } }
 
     public void CreateFixedObstaclePosition()
     {
@@ -33,7 +38,7 @@ public class FixedObstaclePositioningMap
 
         for (int i = 0; i < ConstantValue.MAX_FIXED_OBSTACLE_POSITION_INDEX; ++i)
         {
-            if (0 != (num & temp))
+            if (MOVABLE_ROAD != (num & temp))
             {
                 ++count;
 
@@ -57,11 +62,11 @@ public class FixedObstaclePositioningMap
 
         for (int i = 0; i < ConstantValue.MAX_FIXED_OBSTACLE_POSITION_INDEX; ++i)
         {
-            if (0 == ((lhs & temp) | (rhs & temp)))
+            if (MOVABLE_ROAD == ((lhs & temp) | (rhs & temp)))
             {
                 ++count;
 
-                if (2 == count)
+                if (TOTAL_EMPTY_PLACE == count)
                 {
                     _lastPositioningIndex = lhs | rhs;
 
